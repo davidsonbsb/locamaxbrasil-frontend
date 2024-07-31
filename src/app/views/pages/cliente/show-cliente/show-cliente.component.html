@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-md-8">
+    <c-card [cBorder]="{top: {color: 'dark' , width: 3}}" class="shadow" >
+      <c-card-body>
+        <div class="d-flex">
+          <mat-icon class="me-2">person</mat-icon>
+          <p class="mt-1">Dados Gerais</p>
+      </div>
+      <div>
+          <hr>
+      </div>
+      <div class="row my-4 mx-3">
+
+        <div class="col-md-6">
+            <p> Nome: <span class="fw-light">{{ cliente.nome }}</span></p>
+            <p> Telefone:  <span class="fw-light">{{ cliente.telefone }}</span></p>
+            <p> Vencimento:  <span class="fw-light">{{ cliente.vencimento }}</span></p>
+            <p> Usuário:  <span class="fw-light">{{ cliente.usuario }}</span></p>
+            <p> Servidor:  <span class="fw-light">{{ servidor.nome }}</span></p>
+        </div>
+
+        <div class="col-md-6">
+            <c-card [color]="'light'">
+                <c-card-body class="bg-gradient">
+                    <p> Dispositivo:  <span class="fw-light">{{ cliente.dispositivo }}</span></p>
+                    <p> Aplicativo:  <span class="fw-light">{{ cliente.app }}</span></p>
+                    <p class="d-flex"> ID Aplicativo:  <span class="fw-light mx-1">{{ cliente.app_id }}</span>
+                        <mat-icon class="button-copy" [cdkCopyToClipboard]="cliente.app_id" (cdkCopyToClipboardCopied)="onCopy($event)">content_copy</mat-icon>
+                    </p>
+
+                    <p class="d-flex"> Chave Aplicativo:  <span class="fw-light mx-1">{{ cliente.app_key }}</span>
+                      <mat-icon class="button-copy" [cdkCopyToClipboard]="cliente.app_id" (cdkCopyToClipboardCopied)="onCopy($event)">content_copy</mat-icon>
+                    </p>
+
+                    <p> Vencimento:  <span class="fw-light">{{ cliente.app_vencimento }}</span></p>
+                </c-card-body>
+            </c-card>
+        </div>
+    </div>
+    <app-lancamento (plano)="1"></app-lancamento>
+
+      </c-card-body>
+      <c-card-footer>
+        <button
+        class="btn btn-sm btn-danger mx-3 my-3"
+        routerLink="/clientes"
+      >Voltar
+      </button>
+      </c-card-footer>
+  </c-card>
+  </div>
+</div>
+
+

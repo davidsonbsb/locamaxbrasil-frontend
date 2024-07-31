@@ -1,0 +1,58 @@
+<c-card>
+  <c-card-body>
+    <mat-form-field appearance="outline" class="dense-1 field-100">
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" #input>
+    </mat-form-field>
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" matSort (matSortChange)="announceSortChange($event)">
+        @for (column of columns; track column) {
+          <ng-container [matColumnDef]="column.columnDef">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: #DDD;">
+              {{column.header}}
+            </th>
+            <td mat-cell *matCellDef="let row" (click)="openShowDialog(row.id)">
+              <span (click)="$event.stopPropagation();">
+                @if (column.header == 'Status' && (column.cell(row) == '1' || column.cell(row) == 'true')) {
+                  <mat-icon class="icon-action text-success" (click)="mudarStatus(row.id)">thumb_up_alt</mat-icon>
+                }
+
+                @else if (column.header == 'Status' && (column.cell(row) == '0' || column.cell(row) == 'false')) {
+                  <mat-icon class="icon-action text-secondary" (click)="mudarStatus(row.id)">thumb_down_alt</mat-icon>
+                }
+
+                @else if (column.header == 'Data') {
+
+                    <span [ngClass]="{'text-danger fw-bold': checkVencimento(column.cell(row))}"> {{column.cell(row)}} </span>
+
+                }
+
+
+                @else if (column.header == 'Servidor' ) {
+                  <img src="{{logoServidor[column.cell(row)]}}" class="icon-server">
+                }
+
+                @else if (column.header == 'Valor' ) {
+                  R$ {{(column.cell(row))}},00
+                }
+
+                @else {
+                  {{column.cell(row)}}
+
+                }
+              </span>
+
+            </td>
+          </ng-container>
+        }
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </c-card-body>
+  <c-card-footer>
+    <mat-paginator
+    [pageSizeOptions]="[10, 25, 100]"
+    aria-label="Selecione a pagina"
+  ></mat-paginator>
+  </c-card-footer>
+</c-card>

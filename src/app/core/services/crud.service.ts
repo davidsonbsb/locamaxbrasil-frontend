@@ -12,8 +12,8 @@ export class CrudService {
     //apiHost: any = localStorage.getItem('apiHost');
     apiHost: any = 'http://127.0.0.1:8000/api';
 
-    getAll(filtro?: any, endpoint?: string): Observable<any> {
-        return this.http.post(`${this.apiHost}/${endpoint}`, filtro);
+    index(endpoint?: string): Observable<any> {
+        return this.http.get(`${this.apiHost}/${endpoint}`);
     }
     getPaginator(page?: number, filtro?: any, endpoint?: string): Observable<any> {
         return this.http.post(`${this.apiHost}/${endpoint}?page=` + page, filtro);
@@ -36,5 +36,9 @@ export class CrudService {
     delete(id: number, endpoint?: string): Observable<any> {
         return this.http.delete(`${this.apiHost}/${endpoint}/${id}`);
     }
+
+    updatePayment(id: number, endpoint?: string): Observable<any> {
+      return this.http.get(`${this.apiHost}/${endpoint}/${id}/updatePayment`);
+  }
 
 }

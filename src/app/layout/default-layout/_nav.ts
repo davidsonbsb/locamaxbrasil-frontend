@@ -11,13 +11,30 @@ export const navItems: INavData[] = [
     }
   },
   {
-    title: true,
-    name: 'Cadastros'
+    name: 'Clientes',
+    title: true
   },
   {
     name: 'Clientes',
     url: '/clientes',
-    iconComponent: { name: 'cil-drop' }
+    iconComponent: { name: 'cil-drop' },
+    children: [
+      {
+        name: 'Listagem',
+        url: '/clientes',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Cadastro',
+        url: '/clientes/cadastrar',
+        icon: 'nav-icon-bullet'
+      },
+      {
+        name: 'Show',
+        url: '/clientes/show',
+        icon: 'nav-icon-bullet'
+      },
+    ]
   },
   {
     name: 'Financeiro',

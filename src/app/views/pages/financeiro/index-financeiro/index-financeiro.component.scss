@@ -1,0 +1,21 @@
+.icon-action {
+  cursor: pointer;
+}
+
+mat-icon {
+  transition: background-color 0.3s ease;
+}
+
+td {
+  cursor: pointer;
+}
+
+tr:hover {
+  background-color: #868181;
+}
+
+.icon-server {
+  width: 25px;
+  height: 25px;
+  border-radius: 20px;
+}
