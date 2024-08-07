@@ -1,24 +1,66 @@
 <c-card>
   <c-card-body>
-    <mat-form-field appearance="outline" class="dense-1 field-100">
-      <mat-label>Filtro</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" #input>
-    </mat-form-field>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field appearance="outline" class="dense-1 field-100">
+          <mat-label>Filtro</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" #input>
+        </mat-form-field>
+      </div>
+      <div class="col-6 d-flex justify-content-end d-flex align-items-center">
+        <p><mat-slide-toggle
+          [checked]="clienteAtivos"
+          (click)="getClienteAtivos()"
+          class="me-3"
+          >Clientes Ativos</mat-slide-toggle></p>
+        <button class="btn btn-sm btn-dark botoes-top mb-3 d-flex align-items-center me-2"
+        (click)="adicionar()"><mat-icon>add</mat-icon> Adicionar</button>
+      </div>
 
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" matSort (matSortChange)="announceSortChange($event)">
-        @for (column of columns; track column) {
-          <ng-container [matColumnDef]="column.columnDef">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: #DDD;">
-              {{column.header}}
-            </th>
-            <td mat-cell *matCellDef="let row">
-              {{column.cell(row)}}
-            </td>
-          </ng-container>
-        }
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    </div>
+
+<div class="table-responsive">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table table" matSort (matSortChange)="announceSortChange($event)">
+    @for (column of columns; track column) {
+      <ng-container [matColumnDef]="column.columnDef">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: #DDD;">
+          {{column.header}}
+        </th>
+        <td mat-cell *matCellDef="let row" (click)="openShowDialog(row.id)">
+          <span (click)="$event.stopPropagation();">
+            @if (column.header == 'Status' && (column.cell(row) == '1' || column.cell(row) == 'true')) {
+                <mat-icon class="icon-action text-success">task_alt</mat-icon>
+            }
+
+            @else if (column.header == 'Status' && (column.cell(row) == '0' || column.cell(row) == 'false')) {
+                <mat-icon class="icon-action text-danger">highlight_off</mat-icon>
+            }
+
+            @else if (column.header == 'Vencimento') {
+                <span [ngClass]="{'text-danger fw-bold': checkVencimento(column.cell(row))}"> {{column.cell(row)}} </span>
+            }
+
+            @else if (column.header == 'Servidor' ) {
+                <img [src]="getServidorLogo((column.cell(row)))" class="icon-server">
+            }
+
+            @else if (column.header == 'Valor' ) {
+                R$ {{(column.cell(row))}}
+            }
+
+            @else {
+                {{column.cell(row)}}
+            }
+        </span>
+
+        </td>
+      </ng-container>
+    }
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
+
   </c-card-body>
   <c-card-footer>
     <mat-paginator

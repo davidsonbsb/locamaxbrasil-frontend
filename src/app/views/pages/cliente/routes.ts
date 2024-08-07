@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
-import { CreateClienteComponent } from './create-cliente/create-cliente.component';
+import { FormClienteComponent } from './form-cliente/form-cliente.component';
 import { IndexClienteComponent } from './index-cliente/index-cliente.component';
-import { ShowClienteComponent } from './show-cliente/show-cliente.component';
 
 export const routes: Routes = [
   {
@@ -13,16 +12,23 @@ export const routes: Routes = [
   },
   {
     path: 'cadastrar',
-    component: CreateClienteComponent,
+    component: FormClienteComponent,
     data: {
       title: $localize`Clientes / Cadastrar`
     }
   },
   {
-    path: 'show',
-    component: ShowClienteComponent,
+    path: 'visualizar/:id',
+    component: FormClienteComponent,
     data: {
-      title: $localize`Clientes / Cadastrar`
+      title: $localize`Clientes / Visualizar`
+    }
+  },
+  {
+    path: 'editar/:id',
+    component: FormClienteComponent,
+    data: {
+      title: $localize`Clientes / Editar`
     }
   }
 ];

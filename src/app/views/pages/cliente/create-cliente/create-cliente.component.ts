@@ -8,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CardModule, FormModule, GridModule } from '@coreui/angular';
 import { LancamentoComponent } from '../../financeiro/lancamento/lancamento.component';
 import { CrudService } from './../../../../core/services/crud.service';
+import { format } from 'date-fns';
 
 
 @Component({
@@ -31,7 +32,6 @@ import { CrudService } from './../../../../core/services/crud.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateClienteComponent implements OnChanges{
-
 
     formBuilder = inject(FormBuilder);
     crudService = inject(CrudService);
@@ -84,8 +84,26 @@ export class CreateClienteComponent implements OnChanges{
     }
 
     submit(){
+
+        let app_vencimento = this.form.value.app_vencimento;
+
+        if (app_vencimento) {
+            this.form.value.app_vencimento = format(app_vencimento, 'yyyy-MM-dd');
+        } else {
+            console.log('Data inválida');
+        }
+
+        let vencimento = this.form.value.vencimento;
+
+        if (vencimento) {
+            this.form.value.vencimento = format(vencimento, 'yyyy-MM-dd');
+        } else {
+            console.log('Data inválida');
+        }
+
       this.crudService.store(this.form.value,'cliente').subscribe({
         next: response => {
+
           console.log('response: ', response);
         },
         error: error => {

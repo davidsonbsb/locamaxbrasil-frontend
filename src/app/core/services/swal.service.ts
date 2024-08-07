@@ -9,7 +9,7 @@ export class SwalService {
     optionsToaster: any = {
         timerProgressBar: true,
         showConfirmButton: false,
-        position: 'bottom-end',
+        position: 'top-end',
         toast: true,
         timer: 4000
     }

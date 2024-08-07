@@ -8,7 +8,6 @@ import { LancamentoComponent } from '../../financeiro/lancamento/lancamento.comp
 import { CrudService } from './../../../../core/services/crud.service';
 import { SwalService } from './../../../../core/services/swal.service';
 
-
 @Component({
     selector: 'app-show-cliente',
     standalone: true,
@@ -24,6 +23,7 @@ import { SwalService } from './../../../../core/services/swal.service';
         DecimalPipeFormat
     ],
 })
+
 export class ShowClienteComponent implements OnInit{
 
     crudService = inject(CrudService)

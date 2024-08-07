@@ -1,46 +1,100 @@
-<div class="p-2 mt-2">
+<form cForm [formGroup]="form">
+    <div class="p-2 mt-2">
+        <c-card [cBorder]="{top: {color: 'dark' , width: 3}}" class="shadow" >
+            <c-card-body>
+                <div class="row mt-3">
+                    <div class="d-flex col-6">
+                        <mat-icon class="me-2">paid</mat-icon>
+                        <p class="fs-6">Dados Pagamento</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p><span class="fw-bold fs-6 me-3" [ngClass]="{'pago': financeiro.status, 'npago' : !financeiro.status}">{{ vencimento }}</span></p>
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
 
-    <c-card [cBorder]="{top: {color: 'dark' , width: 3}}" class="shadow" >
-      <c-card-body>
-        <div class="row mt-3">
-            <div class="d-flex col-6">
-                <mat-icon class="me-2">paid</mat-icon>
-                <p class="fs-5">Dados Pagamento</p>
-            </div>
-            <div class="col-6 text-end">
-                <p><span class="fw-bold fs-5 me-3" [ngClass]="{'pago': financeiro.status, 'npago' : !financeiro.status}">{{ vencimento }}</span></p>
-            </div>
-      </div>
-      <div>
-          <hr>
-      </div>
-      <div class="row my-4 mx-3">
+                <div class="row my-4 mx-3">
+                    <div class="col-md-6 mt-3">
+                        <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+                            <mat-label class="color-field">Cliente</mat-label>
+                            <input
+                                matInput
+                                formControlName="nome_cliente"
+                                type="text"
+                                style="color: #000;"
+                                >
+                                <img matSuffix src="{{logoServidor[cliente.servidor_id]}}" class="icon-server">
+                        </mat-form-field>
 
-        <div class="col-md-6 mt-3">
-            <p> Cliente: <span class="fw-light">{{ cliente.nome }}</span></p>
-            <p> Servidor: <span class="fw-light">{{ cliente.servidor_id }}</span></p>
-            <p> Valor: <span class="fw-light">R$ {{ financeiro.valor | decimal }}</span></p>
-        </div>
+                        <mat-form-field appearance="outline" class="dense-1 field-100">
+                            <mat-label class="color-field">Valor</mat-label>
+                            <input
+                                matInput
+                                formControlName="valor"
+                                type="text"
+                                style="color: #000;"
+                                >
+                        </mat-form-field>
 
-        <div class="col-md-6">
-            <c-card [color]="'light'">
-                <c-card-body class="bg-gradient">
-                  <p> Tipo: <span class="fw-light">{{ financeiro.tipo }}</span></p>
-                  <p> Banco: <span class="fw-light">{{ banco.nome }}</span></p>
-                  <p> Status: <span class="fw-bold" [ngClass]="{'pago': financeiro.status, 'npago' : !financeiro.status}">{{ financeiro.status ? 'Pago' : 'Não Pago'}}</span></p>
-                </c-card-body>
-            </c-card>
-        </div>
+                        <mat-form-field appearance="outline" class="dense-1 field-100">
+                            <mat-label class="color-field">Data</mat-label>
+                            <input
+                                matInput
+                                formControlName="data"
+                                [matDatepicker]="picker"
+                                style="color: #000;"
+                                >
+                            <mat-hint>DD/MM/AAAA</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <c-card [color]="'light'">
+                            <c-card-body class="bg-gradient">
+                            <p> Tipo: <span class="fw-light">{{ financeiro.tipo }}</span></p>
+                            <p> Banco: <span class="fw-light">{{ banco.nome }}</span></p>
+                            <p> Status: <span (click)="mudarStatus()" class="fw-bold" [ngClass]="{'pago': financeiro.status, 'npago' : !financeiro.status}">{{ financeiro.status ? 'Pago' : 'Não Pago'}}</span></p>
+                            </c-card-body>
+
+                        </c-card>
+
+                    </div>
+                </div>
+            </c-card-body>
+            <c-card-footer>
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                        <button
+                            class="btn btn-sm btn-secondary mx-1 my-3"
+                            routerLink="/financeiro/lancamentos"
+                            >Voltar
+                        </button>
+                        <button
+                            class="btn btn-sm btn-primary mx-1 my-3"
+                            (click)="editar()"
+                            >Editar
+                        </button>
+                        <button
+                            class="btn btn-sm btn-success mx-1 my-3"
+                            [disabled]="form.invalid"
+                            (click)="salvar()"
+                            >Salvar
+                        </button>
+                    </div>
+                    <div>
+                        <button
+                            class="btn btn-sm btn-danger my-3 flex-row-reverse"
+                            (click)="excluir()"
+                            >Excluir
+                        </button>
+                    </div>
+                </div>
+            </c-card-footer>
+        </c-card>
     </div>
-      </c-card-body>
-      <c-card-footer>
-        <button
-        class="btn btn-sm btn-danger mx-3 my-3"
-        routerLink="/clientes"
-      >Voltar
-      </button>
-      </c-card-footer>
-  </c-card>
-</div>
+</form>
 
 

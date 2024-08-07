@@ -1,7 +1,6 @@
 import { DatePipe, NgClass } from '@angular/common';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
@@ -9,6 +8,7 @@ import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CardModule } from '@coreui/angular';
 import { CrudService } from 'src/app/core/services/crud.service';
+import { SwalService } from 'src/app/core/services/swal.service';
 import { DecimalPipeFormat } from "../../../../pipes/decimal.pipe";
 import { ShowFinanceiroComponent } from './../show-financeiro/show-financeiro.component';
 
@@ -22,7 +22,7 @@ import { ShowFinanceiroComponent } from './../show-financeiro/show-financeiro.co
     imports: [
       CardModule,
       MatIconModule,
-      MatFormFieldModule,
+      //MatFormFieldModule,
       MatInputModule,
       MatTableModule,
       MatSortModule,
@@ -34,9 +34,10 @@ import { ShowFinanceiroComponent } from './../show-financeiro/show-financeiro.co
 })
 export class IndexFinanceiroComponent implements OnInit{
 
-    crudService = inject(CrudService);
-    dialog      = inject(MatDialog);
-    dataPipe    = inject(DatePipe);
+    crudService     = inject(CrudService);
+    dialog          = inject(MatDialog);
+    dataPipe        = inject(DatePipe);
+    swalService     = inject(SwalService);
 
     @ViewChild(MatSort) sort!: MatSort;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -44,11 +45,6 @@ export class IndexFinanceiroComponent implements OnInit{
     dataSource = new MatTableDataSource<any>([]);
 
     columns = [
-        {
-            columnDef: 'id',
-            header: '#',
-            cell: (element: any) => `${element.id}`,
-        },
         {
             columnDef: 'tipo',
             header: 'Tipo',
@@ -105,35 +101,16 @@ export class IndexFinanceiroComponent implements OnInit{
     }
 
     index(){
-
-      let dataObject: any= {};
-
-      /* this.crudService.index('financeiro').pipe(
-        map(response => {
-          // Transforma a      resposta em um objeto mapeado pelo id
-          const dataObject = {};
-          response.forEach(item => {
-            dataObject[item.id] = item;
-          });
-          return dataObject;
-        })
-      ).subscribe({
-        next: dataObject => {
-          this.dataSource.data = dataObject;
-        }
-      }); */
-
         this.crudService.index('financeiro').subscribe({
             next: lancamentos => {
 
                 this.dataSource.data = lancamentos.map((lancamento: any) => ({
-                  nSequencial: lancamentos.from++,
-                  vencimento: this.dataPipe.transform(lancamento.data, 'dd/MM/yyyy'),
-                  ...lancamento
+                    nSequencial: lancamentos.from++,
+                    vencimento: this.dataPipe.transform(lancamento.data, 'dd/MM/yyyy'),
+                    ...lancamento
                 }));
 
             }
-
         })
     }
 
@@ -152,37 +129,35 @@ export class IndexFinanceiroComponent implements OnInit{
 
     mudarStatus(id: number){
 
-      const item = this.dataSource.data.find(item => item.id === id);
+        const item = this.dataSource.data.find(item => item.id === id);
 
-      if (item) {
-        // Altere o status do item (aqui estou alternando entre 1 e 0 como exemplo)
-        item.status = item.status === 1 ? 0 : 1;
-        console.log('Status updated successfully');
+        if (item) {
+            item.status = item.status === 1 ? 0 : 1;
+            this.crudService.updatePayment( id, 'financeiro').subscribe({
+                next: response => {
+                this.swalService.swalToaster('success','Pagamento','Status alterado com sucesso');
+                },
+                error: err => {
+                console.error('Error updating status', err);
+                this.swalService.swalToaster('error','Pagamento','Erro ao alterado status: '+err);
+                }
+            });
+        } else {
+            console.error('Item não encontrado!');
+        }
 
-        // Chame o serviço para atualizar o status no servidor, se necessário
-        this.crudService.updatePayment( id, 'financeiro').subscribe({
-          next: response => {
-            console.log('Status updated successfully', response);
-          },
-          error: err => {
-            console.error('Error updating status', err);
-          }
-        });
-      } else {
-        console.error('Item not found');
-      }
     }
 
     openShowDialog(id: number) {
       const dialogRef = this.dialog.open(ShowFinanceiroComponent, {
         panelClass: 'dialog',
-        height: '400px',
+        height: '450px',
         width: '600px',
         data: {id: id}
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
+        this.index();
 
       });
     }
