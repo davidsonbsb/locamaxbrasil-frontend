@@ -1,0 +1,121 @@
+<form cForm [formGroup]="form">
+    <div class="p-2 mt-2">
+        <c-card [cBorder]="{top: {color: 'dark' , width: 3}}" class="shadow" >
+            <c-card-body>
+                <div class="row mt-3">
+                    <div class="d-flex col-6">
+                        <mat-icon class="me-2">paid</mat-icon>
+                        <p class="fs-6">Dados Pagamento</p>
+                    </div>
+
+                      <div class="col-5 d-flex justify-content-end">
+                          <span class="fw-bold fs-6 me-3" [ngClass]="{'pago': financeiro.status, 'npago' : !financeiro.status}">{{ vencimento }}</span>
+
+                      </div>
+                      <div class="col-1 d-flex justify-content-end cpointer">
+                        <mat-icon (click)="closeDialog()">close</mat-icon>
+                      </div>
+
+                </div>
+                <div>
+                    <hr>
+                </div>
+
+                <div class="row my-4 mx-3">
+                    <div class="col-md-6 mt-3">
+
+                        <mat-form-field appearance="outline" class="dense-1 field-100" >
+                            <mat-label>Cliente</mat-label>
+                            <mat-select formControlName="cliente_id" style="color: #000;">
+                                @for (cliente of clientes; track cliente) {
+                                <mat-option [value]="cliente.id">{{cliente.desc}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="dense-1 field-100">
+                            <mat-label class="color-field">Valor</mat-label>
+                            <input
+                                matInput
+                                formControlName="valor"
+                                type="text"
+                                style="color: #000;"
+                                >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="dense-1 field-100">
+                            <mat-label class="color-field">Data</mat-label>
+                            <input
+                                matInput
+                                formControlName="data"
+                                [matDatepicker]="picker"
+                                style="color: #000;"
+                                >
+                            <mat-hint>DD/MM/AAAA</mat-hint>
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <c-card [color]="'light'">
+                            <c-card-body class="bg-gradient">
+
+
+                            <mat-form-field appearance="outline" class="dense-1 field-100" >
+                                <mat-label>Tipo</mat-label>
+                                <mat-select formControlName="tipo" style="color: #000;">
+                                    <mat-option [value]="'Recebimento'">Recebimento</mat-option>
+                                    <mat-option [value]="'Pagamento'">Pagamento</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="dense-1 field-100" >
+                                <mat-label>Banco</mat-label>
+                                <mat-select formControlName="banco_id" style="color: #000;">
+                                    @for (banco of bancos; track banco) {
+                                    <mat-option [value]="banco.id">{{banco.desc}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+
+                            <p> Status: <span (click)="updateStatus()" class="fw-bold" [ngClass]="{'pago': financeiro.status, 'npago' : !financeiro.status}">{{ financeiro.status ? 'Pago' : 'Não Pago'}}</span></p>
+                            </c-card-body>
+
+                        </c-card>
+
+                    </div>
+                </div>
+            </c-card-body>
+            <c-card-footer>
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                        @if (!adicionar){
+                            <button
+                                class="btn btn-sm btn-danger my-3 flex-row-reverse"
+                                (click)="excluir(financeiro.id)"
+                                [disabled]="isEditar"
+                                >Excluir
+                            </button>
+                        }
+                    </div>
+                    @if (!adicionar){
+                        <button
+                            class="btn btn-sm btn-primary mx-1 my-3"
+                            (click)="editar()"
+                            [disabled]="isEditar"
+                            >Editar
+                        </button>
+                    }
+                    <button
+                        class="btn btn-sm btn-success mx-1 my-3"
+                        [disabled]="form.invalid"
+                        (click)="salvar()"
+                        >Salvar
+                    </button>
+                </div>
+            </c-card-footer>
+        </c-card>
+    </div>
+</form>
+
+

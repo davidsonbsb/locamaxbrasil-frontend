@@ -13,7 +13,6 @@ export class CrudService {
     apiHost: any = 'http://127.0.0.1:8000/api';
 
     index(endpoint?: string, filtro?: any): Observable<any> {
-      console.log('filtro: ', filtro);
         return this.http.post(`${this.apiHost}/${endpoint}`, filtro);
     }
     getPaginator(page?: number, filtro?: any, endpoint?: string): Observable<any> {
@@ -37,9 +36,11 @@ export class CrudService {
     delete(id: number, endpoint?: string): Observable<any> {
         return this.http.delete(`${this.apiHost}/${endpoint}/${id}`);
     }
-
-    updatePayment(id: number, endpoint?: string): Observable<any> {
-      return this.http.get(`${this.apiHost}/${endpoint}/${id}/updatePayment`);
-  }
+    updateStatus(id: number, endpoint?: string): Observable<any> {
+        return this.http.get(`${this.apiHost}/${endpoint}/${id}/updateStatus`);
+    }
+    getDropDown(endpoint?: string): Observable<any> {
+        return this.http.get(`${this.apiHost}/${endpoint}/dropdown`);
+    }
 
 }

@@ -10,7 +10,7 @@ import { CardModule } from '@coreui/angular';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { SwalService } from 'src/app/core/services/swal.service';
 import { DecimalPipeFormat } from "../../../../pipes/decimal.pipe";
-import { ShowFinanceiroComponent } from './../show-financeiro/show-financeiro.component';
+import { FormFinanceiroComponent } from './../form-financeiro/form-financeiro.component';
 
 
 @Component({
@@ -20,17 +20,17 @@ import { ShowFinanceiroComponent } from './../show-financeiro/show-financeiro.co
     providers: [DatePipe],
     standalone: true,
     imports: [
-      CardModule,
-      MatIconModule,
-      //MatFormFieldModule,
-      MatInputModule,
-      MatTableModule,
-      MatSortModule,
-      MatPaginatorModule,
-      MatDialogModule,
-      DecimalPipeFormat,
-      NgClass
-  ],
+        CardModule,
+        MatIconModule,
+        //MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatDialogModule,
+        DecimalPipeFormat,
+        NgClass
+    ],
 })
 export class IndexFinanceiroComponent implements OnInit{
 
@@ -43,6 +43,7 @@ export class IndexFinanceiroComponent implements OnInit{
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
     dataSource = new MatTableDataSource<any>([]);
+    servidores: any = [];
 
     columns = [
         {
@@ -84,15 +85,9 @@ export class IndexFinanceiroComponent implements OnInit{
 
     displayedColumns = this.columns.map(c => c.columnDef);
 
-    logoServidor: any = {
-      1 : '/assets/images/club2.jpeg',
-      2 : '/assets/images/five.jpeg',
-      3 : '/assets/images/playon.jpeg',
-      4 : '/assets/images/seven.jpeg',
-    }
-
     ngOnInit(): void {
         this.index();
+        this.getServidores();
     }
 
     ngAfterViewInit() {
@@ -101,7 +96,7 @@ export class IndexFinanceiroComponent implements OnInit{
     }
 
     index(){
-        this.crudService.index('financeiro').subscribe({
+        this.crudService.index('financeiros').subscribe({
             next: lancamentos => {
 
                 this.dataSource.data = lancamentos.map((lancamento: any) => ({
@@ -109,7 +104,9 @@ export class IndexFinanceiroComponent implements OnInit{
                     vencimento: this.dataPipe.transform(lancamento.data, 'dd/MM/yyyy'),
                     ...lancamento
                 }));
-
+            },
+            error: err => {
+                console.error('err: ', err);
             }
         })
     }
@@ -120,20 +117,18 @@ export class IndexFinanceiroComponent implements OnInit{
     }
 
     announceSortChange(sortState: Sort) {
-      if (sortState.direction) {
+        if (sortState.direction) {
         //console.log(`Ordenado por ${sortState.direction}`);
-      } else {
+        } else {
         //console.log(`Ordenado limpa`);;
-      }
+        }
     }
 
-    mudarStatus(id: number){
-
+    updateStatus(id: number){
         const item = this.dataSource.data.find(item => item.id === id);
-
         if (item) {
             item.status = item.status === 1 ? 0 : 1;
-            this.crudService.updatePayment( id, 'financeiro').subscribe({
+            this.crudService.updateStatus( id, 'financeiro').subscribe({
                 next: response => {
                 this.swalService.swalToaster('success','Pagamento','Status alterado com sucesso');
                 },
@@ -148,26 +143,54 @@ export class IndexFinanceiroComponent implements OnInit{
 
     }
 
-    openShowDialog(id: number) {
-      const dialogRef = this.dialog.open(ShowFinanceiroComponent, {
+    getServidorLogo(id: any): string {
+        return id && this.servidores[id -1] ? this.servidores[id -1].logo : '/assets/images/no_pic.png';
+    }
+
+    getServidores() {
+        this.crudService.index('servidores').subscribe( {
+            next: servidores => {
+                this.servidores = servidores;
+            }
+        })
+    }
+
+    openFormDialog(id: number) {
+        const dialogRef = this.dialog.open(FormFinanceiroComponent, {
         panelClass: 'dialog',
         height: '450px',
         width: '600px',
-        data: {id: id}
-      });
+        data: { action : "visualizar", id : id }
+        });
 
-      dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe(result => {
         this.index();
 
-      });
+        });
     }
 
     checkVencimento (vencimento: string) {
-      const [dia, mes, ano] = vencimento.split('/').map(Number);
-      const data = new Date(ano, mes - 1, dia);
-      const today = new Date();
+        const [dia, mes, ano] = vencimento.split('/').map(Number);
+        const data = new Date(ano, mes - 1, dia);
+        const today = new Date();
 
-      return data > today ? false : true;
+        return data > today ? false : true;
+    }
+
+    adicionar() {
+        const dialogRef = this.dialog.open(FormFinanceiroComponent, {
+            //panelClass: 'dialog',
+            height: '450px',
+            width: '600px',
+            data: { action : "adicionar" }
+        });
+
+        dialogRef.updatePosition({top: '120px'});
+
+        dialogRef.afterClosed().subscribe(result => {
+        this.index();
+
+        });
     }
 
 

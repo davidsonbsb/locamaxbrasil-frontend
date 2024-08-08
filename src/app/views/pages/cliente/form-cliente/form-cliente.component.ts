@@ -1,7 +1,7 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -46,21 +46,30 @@ export class FormClienteComponent {
     data        = inject<any>(MAT_DIALOG_DATA);
     dataPipe    = inject(DatePipe);
 
-
     action: string = '';
     adicionar: boolean = false;
     isEditar: boolean = false;
-    id: number = 0;
 
+    id: number = 0;
     cliente: any = {}
     servidores: any = []
     bancos: any = []
-    readonly: boolean = false
 
     apps: string[] = [
         'Duplex',
         'DupleCast',
         'XCloud',
+        'XCIPTV',
+        'Cloud',
+        'STB',
+        'Smarters',
+        'Meta',
+        'Web',
+        'DreamTV',
+        'LazerPlay',
+        'Club Lite',
+        'Club Smart',
+        'P2P',
     ];
 
     planos: Array<any> = [
@@ -69,25 +78,17 @@ export class FormClienteComponent {
         { "id" : 'mega', "desc" : "Premium" }
     ];
 
-
-    logoServidor: any = {
-        1 : '/assets/images/club2.jpeg',
-        2 : '/assets/images/five.jpeg',
-        3 : '/assets/images/playon.jpeg',
-        4 : '/assets/images/seven.jpeg',
-      }
-
     form = this.formBuilder.group({
-        nome : [''],
-        telefone : [''],
-        valor : [''],
-        plano : [''],
-        vencimento : [''],
-        usuario : [''],
-        servidor_id : [''],
-        dispositivo : [''],
+        nome : ['',Validators.required],
+        telefone : ['',Validators.required],
+        valor : ['',Validators.required],
+        plano : ['',Validators.required],
+        vencimento : ['',Validators.required],
+        usuario : ['',Validators.required],
+        servidor_id : ['',Validators.required],
+        dispositivo : ['',Validators.required],
         banco_id : [''],
-        app : [''],
+        app : ['',Validators.required],
         app_id : [''],
         app_key : [''],
         app_vencimento : [''],
@@ -105,8 +106,6 @@ export class FormClienteComponent {
 
         this.action = this.data.action;
         this.init();
-        console.log('dialogRef',this.data);
-
     }
 
     init() {
@@ -161,21 +160,20 @@ export class FormClienteComponent {
     }
 
 
-    onCopy(success: boolean) {
+    onCopy(success: boolean){
         if (success) {
-            this.swalService.swalToaster('success','Copia','Valor copiado com sucesso');
+            this.swalService.swalToaster('success','','Valor copiado com sucesso');
         } else {
-            this.swalService.swalToaster('error','Copia','Erro ao copiar valor');
+            this.swalService.swalToaster('error','','Erro ao copiar valor');
         }
     }
 
-    getServidorLogo(): string {
+    getServidorLogo(): string{
         const servidorId: any = this.form.value.servidor_id;
-        return servidorId && this.servidores[servidorId -1] ? this.servidores[servidorId -1].logo : '';
-      }
+        return servidorId && this.servidores[servidorId -1] ? this.servidores[servidorId -1].logo : '/assets/images/no_pic.png';
+    }
 
-    editar (){
-        this.readonly = !this.readonly
+    editar(){
         this.action = 'editar';
         this.isEditar = true;
         for (const controlName in this.form.controls) {
@@ -183,7 +181,7 @@ export class FormClienteComponent {
         }
     }
 
-    salvar() {
+    salvar(){
 
         this.form.value.vencimento = this.dataPipe.transform(this.form.value.vencimento, 'yyyy-MM-dd');
         this.form.value.app_vencimento = this.dataPipe.transform(this.form.value.app_vencimento, 'yyyy-MM-dd');
@@ -221,12 +219,12 @@ export class FormClienteComponent {
             if(result.isConfirmed){
                 this.crudService.delete(id, 'cliente').subscribe( {
                     next: response => {
-                        this.swalService.swalToaster('success','Exclusão','Cliente excluido com sucesso!');
+                        this.swalService.swalToaster('success','','Cliente excluido com sucesso!');
                         this.dialogRef.close();
                     },
                     error: err => {
                         console.error(err.error.message);
-                        this.swalService.swalToaster('error','Exclusão','Erro ao excluir cliente!');
+                        this.swalService.swalToaster('error','','Erro ao excluir cliente!');
 
                     }
                 })

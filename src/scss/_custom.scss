@@ -29,3 +29,38 @@
 .cpointer {
   cursor: pointer;
 }
+
+.button-copy {
+  cursor: pointer;
+  font-size: 20px;
+  color: green;
+  margin-top: 3px;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+tr:hover {
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+td {
+  color: #333;
+}
+
+.btn-sm {
+  height: 30px;
+}
+
+@media (max-width: 500px) {
+  .menu-item {
+      flex-basis: 100%;
+  }
+}
+
