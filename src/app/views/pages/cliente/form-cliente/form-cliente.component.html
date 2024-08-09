@@ -110,6 +110,15 @@
                                     <img matSuffix [src]="getServidorLogo()" class="icon-server">
                                 </mat-form-field>
 
+                                <mat-form-field appearance="outline" class="dense-1 field-100" >
+                                  <mat-label>Url</mat-label>
+                                  <mat-select formControlName="url" style="color: #000;">
+                                      @for (url of urls; track url) {
+                                          <mat-option [value]="url">{{url}}</mat-option>
+                                      }
+                                  </mat-select>
+                              </mat-form-field>
+
                                 <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
                                     <mat-label class="color-field">Dispositivo</mat-label>
                                     <input

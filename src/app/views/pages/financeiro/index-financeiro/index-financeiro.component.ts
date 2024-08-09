@@ -54,7 +54,7 @@ export class IndexFinanceiroComponent implements OnInit{
         {
             columnDef: 'cliente',
             header: 'Cliente',
-            cell: (element: any) => `${element.cliente.nome}`,
+            cell: (element: any) => `${element.cliente_nome}`,
         },
         {
             columnDef: 'servidor',
@@ -74,7 +74,7 @@ export class IndexFinanceiroComponent implements OnInit{
         {
             columnDef: 'banco',
             header: 'Banco',
-            cell: (element: any) => `${element.banco.nome}`,
+            cell: (element: any) => `${element.banco_nome}`,
         },
         {
             columnDef: 'status',
@@ -100,10 +100,13 @@ export class IndexFinanceiroComponent implements OnInit{
             next: lancamentos => {
 
                 this.dataSource.data = lancamentos.map((lancamento: any) => ({
-                    nSequencial: lancamentos.from++,
-                    vencimento: this.dataPipe.transform(lancamento.data, 'dd/MM/yyyy'),
-                    ...lancamento
+                  //nSequencial: lancamentos.from++,
+                  vencimento: this.dataPipe.transform(lancamento.data, 'dd/MM/yyyy'),
+                  cliente_nome: lancamento.cliente.nome,
+                  banco_nome: lancamento.banco.nome,
+                  ...lancamento
                 }));
+                console.log('this.dataSource.data: ', this.dataSource.data);
             },
             error: err => {
                 console.error('err: ', err);

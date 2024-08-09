@@ -1,5 +1,5 @@
 import { NgStyle } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonDirective, CardBodyComponent, CardComponent, CardGroupComponent, ColComponent, ContainerComponent, FormControlDirective, FormDirective, InputGroupComponent, InputGroupTextDirective, RowComponent, TextColorDirective } from '@coreui/angular';
@@ -31,16 +31,15 @@ import { AuthService } from './../../../core/services/auth.service';
 })
 export class LoginComponent {
 
+    authService = inject(AuthService);
+    formBuilder = inject(FormBuilder);
+    router      = inject(Router);
+
+
     loginForm: FormGroup = this.formBuilder.group({
         email: [''],
         password: ['']
     })
-
-    constructor(
-        private authService: AuthService,
-        private formBuilder: FormBuilder,
-        private router: Router
-    ) { }
 
     login() {
 
@@ -49,7 +48,7 @@ export class LoginComponent {
         this.authService.login(email, password).subscribe({
             next: response => {
                 this.authService.setToken(response.token);
-                this.router.navigate(['/home']);
+                this.router.navigate(['/dashboard']);
             },
             error: err => {
                 err.error

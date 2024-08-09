@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
+import { supportGuard } from "src/app/core/guards/support.guard";
 import { DefaultLayoutComponent } from './layout';
+
 
 export const routes: Routes = [
   {
@@ -15,15 +17,17 @@ export const routes: Routes = [
     },
     children: [
       {
-        //canActivate: [supportGuard],
+        canActivate: [supportGuard],
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
       },
       {
+        canActivate: [supportGuard],
         path: 'clientes',
         loadChildren: () => import('./views/pages/cliente/routes').then((m) => m.routes)
       },
       {
+        canActivate: [supportGuard],
         path: 'financeiro',
         loadChildren: () => import('./views/pages/financeiro/routes').then((m) => m.routes)
       }

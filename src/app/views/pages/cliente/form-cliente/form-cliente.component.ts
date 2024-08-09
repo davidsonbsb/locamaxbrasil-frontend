@@ -54,6 +54,7 @@ export class FormClienteComponent {
     cliente: any = {}
     servidores: any = []
     bancos: any = []
+    urls: string[] = [];
 
     apps: string[] = [
         'Duplex',
@@ -86,6 +87,7 @@ export class FormClienteComponent {
         vencimento : ['',Validators.required],
         usuario : ['',Validators.required],
         servidor_id : ['',Validators.required],
+        url: [''],
         dispositivo : ['',Validators.required],
         banco_id : [''],
         app : ['',Validators.required],
@@ -106,6 +108,24 @@ export class FormClienteComponent {
 
         this.action = this.data.action;
         this.init();
+
+        this.form.get('servidor_id')!.valueChanges.subscribe(value => {
+          this.onServidorSelected(value);
+        });
+    }
+
+    onServidorSelected(id: any) {
+      const item = this.servidores.find((item: { id: any; }) => item.id === id);
+
+      if (item) {
+        this.urls = [
+          item.url_1,
+          item.url_2,
+          item.url_3,
+        ];
+        this.form.get('url')!.enable();
+      }
+
     }
 
     init() {
@@ -125,7 +145,6 @@ export class FormClienteComponent {
             this.adicionar = true;
             this.getServidores();
             this.getBancos();
-
         }
     }
 
@@ -150,6 +169,7 @@ export class FormClienteComponent {
             plano : this.cliente.plano,
             banco_id : '',
             usuario : this.cliente.usuario,
+            url : this.cliente.url,
             servidor_id : this.cliente.servidor.id,
             dispositivo : this.cliente.dispositivo,
             app : this.cliente.app,
@@ -158,7 +178,6 @@ export class FormClienteComponent {
             app_vencimento : this.cliente.app_vencimento,
         });
     }
-
 
     onCopy(success: boolean){
         if (success) {
@@ -182,7 +201,6 @@ export class FormClienteComponent {
     }
 
     salvar(){
-
         this.form.value.vencimento = this.dataPipe.transform(this.form.value.vencimento, 'yyyy-MM-dd');
         this.form.value.app_vencimento = this.dataPipe.transform(this.form.value.app_vencimento, 'yyyy-MM-dd');
 
@@ -211,7 +229,6 @@ export class FormClienteComponent {
                 }
             })
         }
-
     }
 
     excluir(id: number) {
@@ -230,7 +247,6 @@ export class FormClienteComponent {
                 })
             }
         });
-
     }
 
     closeDialog() {
@@ -241,7 +257,6 @@ export class FormClienteComponent {
         this.crudService.index('servidores').subscribe( {
             next: servidores => {
                 this.servidores = servidores;
-
             }
         })
     }

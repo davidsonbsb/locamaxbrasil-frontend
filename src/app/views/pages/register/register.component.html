@@ -5,8 +5,8 @@
         <c-card class="mx-4">
           <c-card-body class="p-4">
             <form cForm [formGroup]="registerForm">
-              <h1>Register</h1>
-              <p class="text-body-secondary">Create your account</p>
+              <h1>Registro</h1>
+              <p class="text-body-secondary">Crie sua conta</p>
               <c-input-group class="mb-3">
                 <span cInputGroupText>
                   <svg cIcon name="cilUser"></svg>
@@ -14,7 +14,7 @@
                 <input
                     autoComplete="name"
                     cFormControl
-                    placeholder="Username"
+                    placeholder="Nome"
                     formControlName="name"
 
                 />
@@ -36,7 +36,7 @@
                 <input
                     autoComplete="new-password"
                     cFormControl
-                    placeholder="Password"
+                    placeholder="Senha"
                     formControlName="password"
                     type="password"
                     />
@@ -48,7 +48,7 @@
                 <input
                     autoComplete="new-password"
                     cFormControl
-                    placeholder="Repeat password"
+                    placeholder="Confirmação de senha"
                     type="password"
                     formControlName="password_confirmation"
                     />
@@ -57,7 +57,7 @@
                 <button
                     cButton color="success"
                     (click)="register()"
-                >Create Account</button>
+                >Criar Conta</button>
               </div>
             </form>
           </c-card-body>

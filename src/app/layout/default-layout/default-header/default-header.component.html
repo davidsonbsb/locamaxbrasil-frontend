@@ -16,15 +16,15 @@
         <a cNavLink routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       </c-nav-item>
       <c-nav-item>
-        <a cNavLink routerLink="/users" routerLinkActive="active">Users</a>
+        <a cNavLink routerLink="/clientes" routerLinkActive="active">Clientes</a>
       </c-nav-item>
       <c-nav-item>
-        <a cNavLink routerLink="/settings" routerLinkActive="active">Settings</a>
+        <a cNavLink routerLink="/financeiro" routerLinkActive="active">Financeiro</a>
       </c-nav-item>
     </c-header-nav>
 
     <c-header-nav class="d-none d-md-flex ms-auto ">
-      <a cNavLink>
+     <!--  <a cNavLink>
         <svg cIcon class="my-1" name="cilBell" size="lg"></svg>
       </a>
       <a cNavLink>
@@ -32,7 +32,7 @@
       </a>
       <a cNavLink>
         <svg cIcon class="my-1" name="cilEnvelopeOpen" size="lg"></svg>
-      </a>
+      </a> -->
     </c-header-nav>
 
     <c-header-nav class="ms-auto ms-md-0">
@@ -62,14 +62,14 @@
       <c-avatar
         shape="rounded-1"
         [size]="'md'"
-        src="./assets/images/avatars/8.jpg"
+        src="./assets/brand/LogoNova.png"
         status="success"
         textColor="primary"
         alt="User avatar"
       />
     </button>
     <ul cDropdownMenu class="pt-0 w-auto">
-      <li>
+     <!--  <li>
         <h6 cDropdownHeader class="bg-body-secondary text-body-secondary fw-semibold py-2 rounded-top">
           Account
         </h6>
@@ -148,7 +148,7 @@
           <svg cIcon class="me-2" name="cilLockLocked"></svg>
           Lock Account
         </a>
-      </li>
+      </li> -->
       <li>
         <a cDropdownItem routerLink="">
           <svg cIcon class="me-2" name="cilAccountLogout"></svg>
