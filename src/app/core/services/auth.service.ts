@@ -10,15 +10,20 @@ export class AuthService {
     http = inject(HttpClient)
 
     token?: any;
-    private baseURL = 'http://localhost:8000';
+    apiHost: any = localStorage.getItem('apiHost');
+    host: any = localStorage.getItem('host');
+    //private apiHost = 'http://localhost:8000';
 
+    constructor () {
+      this.token = localStorage.getItem('token');
+    }
 
     register(name: string, email:string, password:string, password_confirmation: string): Observable<any> {
-      return this.http.post<any>(`${this.baseURL}/register`, {name, email, password, password_confirmation}, { withCredentials: true });
+      return this.http.post<any>(`${this.host}/register`, {name, email, password, password_confirmation}, { withCredentials: true });
   }
 
     login(email:string, password:string): Observable<any> {
-        return this.http.post<any>(`${this.baseURL}/api/login`, {email, password}, { withCredentials: true });
+        return this.http.post<any>(`${this.apiHost}/login`, {email, password}, { withCredentials: true });
     }
 
     setToken(token: string): void {
@@ -29,6 +34,7 @@ export class AuthService {
     logout(): void {
         localStorage.removeItem('token');
         this.token = null;
+        this.http.get<any>(`${this.apiHost}/logout`);
     }
 
     getToken(): string | undefined {
@@ -41,13 +47,26 @@ export class AuthService {
     }
 
     private isTokenExpired(token: string): boolean {
-        /* const decodedToken: { exp: number } = jwt_decode(token);
-        const expirationDate = new Date(0);
-        expirationDate.setUTCSeconds(decodedToken.exp);
 
-        return expirationDate.valueOf() < new Date().valueOf(); */
+      let status = this.http.get<any>(`${this.apiHost}/check-token`);
 
-        return true;
+      status.subscribe({
+        next: response => {
+          if(response.status) {
+            return true
+          }
+            return false
+
+        },
+        error: err => {
+          console.error('err: ', err.error);
+          return false;
+
+        }
+      })
+
+      return false;
+
     }
 
 }

@@ -1,0 +1,8 @@
+{
+  "serverInfo": {
+      "api": "api",
+      "host": "http://localhost:8000",
+      "build": "feature/develop",
+      "release": "feature/develop"
+  }
+}

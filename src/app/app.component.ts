@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { environment } from './../environments/environment.prod';
+
 
 import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from './icons/icon-subset';
+
 
 @Component({
   selector: 'app-root',
@@ -30,5 +33,29 @@ export class AppComponent implements OnInit {
         return;
       }
     });
+
+    this.getInfo();
   }
+
+  getInfo() {
+
+    let host = environment.host;
+
+    let apiHost = host + '/' + environment.api;
+
+    const data = {
+      host: host,
+      api: environment.api,
+      apiHost: apiHost,
+      release: environment.release,
+      build: environment.build,
+    }
+
+    localStorage['host'] = data.host;
+    localStorage['apiHost'] = data.apiHost;
+    localStorage['build'] = data.build;
+    localStorage['release'] = data.release;
+
+}
+
 }

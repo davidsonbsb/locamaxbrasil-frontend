@@ -9,8 +9,8 @@ export class CrudService {
 
     http = inject(HttpClient);
 
-    //apiHost: any = localStorage.getItem('apiHost');
-    apiHost: any = 'http://127.0.0.1:8000/api';
+    apiHost: any = localStorage.getItem('apiHost');
+    //apiHost: any = 'http://127.0.0.1:8000/api';
 
     index(endpoint?: string, filtro?: any): Observable<any> {
         return this.http.post(`${this.apiHost}/${endpoint}`, filtro);
