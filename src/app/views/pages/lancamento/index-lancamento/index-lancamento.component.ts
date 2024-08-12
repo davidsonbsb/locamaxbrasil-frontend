@@ -7,16 +7,16 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CardModule } from '@coreui/angular';
-import { CrudService } from 'src/app/core/services/crud.service';
-import { SwalService } from 'src/app/core/services/swal.service';
 import { DecimalPipeFormat } from "../../../../pipes/decimal.pipe";
-import { FormFinanceiroComponent } from './../form-financeiro/form-financeiro.component';
+import { CrudService } from './../../../../core/services/crud.service';
+import { SwalService } from './../../../../core/services/swal.service';
+import { FormLancamentoComponent } from './../../lancamento/form-lancamento/form-lancamento.component';
 
 
 @Component({
-    selector: 'app-index-financeiro',
-    templateUrl: './index-financeiro.component.html',
-    styleUrl: './index-financeiro.component.scss',
+    selector: 'app-index-lancamento',
+    templateUrl: './index-lancamento.component.html',
+    styleUrl: './index-lancamento.component.scss',
     providers: [DatePipe],
     standalone: true,
     imports: [
@@ -32,7 +32,7 @@ import { FormFinanceiroComponent } from './../form-financeiro/form-financeiro.co
         NgClass
     ],
 })
-export class IndexFinanceiroComponent implements OnInit{
+export class IndexLancamentoComponent implements OnInit{
 
     crudService     = inject(CrudService);
     dialog          = inject(MatDialog);
@@ -96,7 +96,7 @@ export class IndexFinanceiroComponent implements OnInit{
     }
 
     index(){
-        this.crudService.index('financeiros').subscribe({
+        this.crudService.index('lancamentos').subscribe({
             next: lancamentos => {
 
                 this.dataSource.data = lancamentos.map((lancamento: any) => ({
@@ -106,7 +106,6 @@ export class IndexFinanceiroComponent implements OnInit{
                   banco_nome: lancamento.banco.nome,
                   ...lancamento
                 }));
-                console.log('this.dataSource.data: ', this.dataSource.data);
             },
             error: err => {
                 console.error('err: ', err);
@@ -131,7 +130,7 @@ export class IndexFinanceiroComponent implements OnInit{
         const item = this.dataSource.data.find(item => item.id === id);
         if (item) {
             item.status = item.status === 1 ? 0 : 1;
-            this.crudService.updateStatus( id, 'financeiro').subscribe({
+            this.crudService.updateStatus( id, 'lancamento').subscribe({
                 next: response => {
                 this.swalService.swalToaster('success','Pagamento','Status alterado com sucesso');
                 },
@@ -159,9 +158,9 @@ export class IndexFinanceiroComponent implements OnInit{
     }
 
     openFormDialog(id: number) {
-        const dialogRef = this.dialog.open(FormFinanceiroComponent, {
+        const dialogRef = this.dialog.open(FormLancamentoComponent, {
         panelClass: 'dialog',
-        height: '450px',
+        height: '500px',
         width: '600px',
         data: { action : "visualizar", id : id }
         });
@@ -181,9 +180,9 @@ export class IndexFinanceiroComponent implements OnInit{
     }
 
     adicionar() {
-        const dialogRef = this.dialog.open(FormFinanceiroComponent, {
+        const dialogRef = this.dialog.open(FormLancamentoComponent, {
             //panelClass: 'dialog',
-            height: '450px',
+            height: '500px',
             width: '600px',
             data: { action : "adicionar" }
         });

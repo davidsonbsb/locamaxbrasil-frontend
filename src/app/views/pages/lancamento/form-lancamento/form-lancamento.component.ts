@@ -5,6 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -18,9 +19,9 @@ import { DecimalPipeFormat } from '../../../../pipes/decimal.pipe';
 
 
 @Component({
-    selector: 'app-form-financeiro',
-    templateUrl: './form-financeiro.component.html',
-    styleUrl: './form-financeiro.component.scss',
+    selector: 'app-form-lancamento',
+    templateUrl: './form-lancamento.component.html',
+    styleUrl: './form-lancamento.component.scss',
     providers: [DatePipe],
     standalone: true,
     imports: [
@@ -39,9 +40,10 @@ import { DecimalPipeFormat } from '../../../../pipes/decimal.pipe';
         MatDatepickerModule,
         MatSelectModule,
         MatOptionModule,
+        MatExpansionModule
     ],
 })
-export class FormFinanceiroComponent{
+export class FormLancamentoComponent{
 
     crudService = inject(CrudService);
     swalService = inject(SwalService);
@@ -56,7 +58,7 @@ export class FormFinanceiroComponent{
     isEditar: boolean = false;
 
     id: number = 0;
-    financeiro: any = {};
+    lancamento: any = {};
     cliente: any = {};
     clientes: any = [];
     banco: any = {};
@@ -73,6 +75,7 @@ export class FormFinanceiroComponent{
         banco_id : ['',Validators.required],
         data : [this.today],
         status : [false],
+        observacao : ['']
     })
 
     constructor() {
@@ -102,12 +105,12 @@ export class FormFinanceiroComponent{
     }
 
     getId() {
-        this.crudService.getById(this.data.id,'financeiro').subscribe({
-            next: financeiro =>{
-                this.financeiro = financeiro;
-                this.cliente = financeiro.cliente;
-                this.banco = financeiro.banco;
-                this.vencimento = this.dataPipe.transform(financeiro.data, 'dd/MM/yyyy');
+        this.crudService.getById(this.data.id,'lancamento').subscribe({
+            next: lancamento =>{
+                this.lancamento = lancamento;
+                this.cliente = lancamento.cliente;
+                this.banco = lancamento.banco;
+                this.vencimento = this.dataPipe.transform(lancamento.data, 'dd/MM/yyyy');
                 this.setValueForms();
             }
         })
@@ -116,19 +119,20 @@ export class FormFinanceiroComponent{
 
     setValueForms() {
         this.form.setValue({
-          valor : this.financeiro.valor,
+          valor : this.lancamento.valor,
           cliente_id : this.cliente.id,
-          data : this.financeiro.data,
-          tipo : this.financeiro.tipo,
+          data : this.lancamento.data,
+          tipo : this.lancamento.tipo,
           banco_id : this.banco.id,
-          status : this.financeiro.status,
+          status : this.lancamento.status,
+          observacao : this.lancamento.observacao,
         });
     }
 
 
     updateStatus(){
-        this.financeiro.status = !this.financeiro.status;
-        this.crudService.updateStatus( this.data.id, 'financeiro').subscribe({
+        this.lancamento.status = !this.lancamento.status;
+        this.crudService.updateStatus( this.data.id, 'lancamento').subscribe({
             next: response => {
                 this.swalService.swalToaster('success','Pagamento','Status alterado com sucesso');
             },
@@ -158,7 +162,7 @@ export class FormFinanceiroComponent{
         }
 
         if(this.action === 'adicionar'){
-            this.crudService.store(this.form.value,'financeiro').subscribe({
+            this.crudService.store(this.form.value,'lancamento').subscribe({
                 next: response =>{
                     this.swalService.swalToaster('success','','Lançamento adicionado com sucesso!');
                     this.dialogRef.close();
@@ -171,7 +175,7 @@ export class FormFinanceiroComponent{
         }
 
         if(this.action === 'editar'){
-            this.crudService.update(this.data.id,this.form.value,'financeiro').subscribe({
+            this.crudService.update(this.data.id,this.form.value,'lancamento').subscribe({
                 next: response => {
                     this.swalService.swalToaster('success','','Lançamento alterado com sucesso');
                     this.dialogRef.close();
@@ -187,7 +191,7 @@ export class FormFinanceiroComponent{
     excluir(id: number) {
         this.swalService.swalDeleteWarning().then(result => {
             if(result.isConfirmed){
-                this.crudService.delete(id, 'financeiro').subscribe( {
+                this.crudService.delete(id, 'lancamento').subscribe( {
                     next: response => {
                         this.swalService.swalToaster('success','','Lançamento excluido com sucesso!');
                         this.dialogRef.close();

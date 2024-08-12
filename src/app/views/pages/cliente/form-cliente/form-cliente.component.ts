@@ -94,6 +94,7 @@ export class FormClienteComponent {
         app_id : [''],
         app_key : [''],
         app_vencimento : [''],
+        observacao : [''],
     })
 
     constructor() {
@@ -176,6 +177,7 @@ export class FormClienteComponent {
             app_id : this.cliente.app_id,
             app_key : this.cliente.app_key,
             app_vencimento : this.cliente.app_vencimento,
+            observacao : this.cliente.observacao,
         });
     }
 

@@ -154,8 +154,8 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
     adicionar() {
         const dialogRef = this.dialog.open(FormClienteComponent, {
             //panelClass: 'dialog',
-            height: '650px',
-            width: '640px',
+            height: '590px',
+            width: '800px',
             data: { action : "adicionar" }
         });
 
@@ -170,8 +170,8 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
     openFormDialog(id: number) {
         const dialogRef = this.dialog.open(FormClienteComponent, {
             //panelClass: 'dialog',
-            height: '650px',
-            width: '640px',
+            height: '590px',
+            width: '800px',
             data: { action : "visualizar", id : id }
         });
         dialogRef.updatePosition({top: '120px'});

@@ -9,7 +9,7 @@
                     </div>
 
                       <div class="col-5 d-flex justify-content-end">
-                          <span class="fw-bold fs-6 me-3" [ngClass]="{'pago': financeiro.status, 'npago' : !financeiro.status}">{{ vencimento }}</span>
+                          <span class="fw-bold fs-6 me-3" [ngClass]="{'pago': lancamento.status, 'npago' : !lancamento.status}">{{ vencimento }}</span>
 
                       </div>
                       <div class="col-1 d-flex justify-content-end cpointer">
@@ -78,13 +78,31 @@
                                 </mat-select>
                             </mat-form-field>
 
-                            <p> Status: <span (click)="updateStatus()" class="fw-bold" [ngClass]="{'pago': financeiro.status, 'npago' : !financeiro.status}">{{ financeiro.status ? 'Pago' : 'Não Pago'}}</span></p>
+                            <p> Status: <span (click)="updateStatus()" class="fw-bold" [ngClass]="{'pago': lancamento.status, 'npago' : !lancamento.status}">{{ lancamento.status ? 'Pago' : 'Não Pago'}}</span></p>
                             </c-card-body>
 
                         </c-card>
 
                     </div>
                 </div>
+                <div class=" d-flex justify-content-center">
+                  <mat-expansion-panel hideToggle class="w-75">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>Observação</mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                        <mat-form-field appearance="outline" class="dense-1 field-100 rm-space-bottom">
+                            <textarea
+                                matInput [rows]="3"
+                                formControlName="observacao"
+                                style="color: #000;"
+                                ></textarea>
+                        </mat-form-field>
+
+                  </mat-expansion-panel>
+                </div>
+
+
             </c-card-body>
             <c-card-footer>
                 <div class="d-flex">
@@ -92,7 +110,7 @@
                         @if (!adicionar){
                             <button
                                 class="btn btn-sm btn-danger my-3 flex-row-reverse"
-                                (click)="excluir(financeiro.id)"
+                                (click)="excluir(lancamento.id)"
                                 [disabled]="isEditar"
                                 >Excluir
                             </button>

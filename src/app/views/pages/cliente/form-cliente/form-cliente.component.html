@@ -16,9 +16,10 @@
                     <hr>
                 </div>
                 <div class="row mt-4">
-                    <div class="col-md-6 mt-3">
-
-                        <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+                    <div class="col-md-4">
+                      <c-card [color]="'light'">
+                        <c-card-body class="bg-gradient">
+                          <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
                             <mat-label class="color-field">Cliente</mat-label>
                             <input
                                 matInput
@@ -82,8 +83,37 @@
                             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
+                          </c-card-body>
+                          </c-card>
 
-                        <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+
+
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <c-card [color]="'light'">
+                        <c-card-body class="bg-gradient">
+
+                            <mat-form-field appearance="outline" class="dense-1 field-100" >
+                                <mat-label>Servidor</mat-label>
+                                <mat-select formControlName="servidor_id" style="color: #000;">
+                                    <mat-option>Nenhum</mat-option>
+                                    @for (servidor of servidores; track servidor) {
+                                        <mat-option [value]="servidor.id">{{servidor.nome}}</mat-option>
+                                    }
+                                </mat-select>
+                                <img matSuffix [src]="getServidorLogo()" class="icon-server">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="dense-1 field-100" >
+                              <mat-label>Url</mat-label>
+                              <mat-select formControlName="url" style="color: #000;">
+                                  @for (url of urls; track url) {
+                                      <mat-option [value]="url">{{url}}</mat-option>
+                                  }
+                              </mat-select>
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline"  disabled class="dense-1 field-100 rm-space-bottom">
                             <mat-label class="color-field">Usuário</mat-label>
                             <input
                                 matInput
@@ -91,33 +121,29 @@
                                 type="text"
                                 style="color: #000;"
                                 >
-                        </mat-form-field>
+                          </mat-form-field>
+                        </c-card-body>
+                      </c-card>
 
+                      <c-card [color]="'light'" class="mt-2 d-flex">
+                        <c-card-body class="bg-gradient">
+                          <mat-form-field appearance="outline" class="dense-1 field-100 rm-space-bottom">
+                              <mat-label>Observação</mat-label>
+                              <textarea
+                                  matInput [rows]="5"
+                                  formControlName="observacao"
+                                  style="color: #000;"
+                                  ></textarea>
+                          </mat-form-field>
+                        </c-card-body>
+                      </c-card>
                     </div>
 
-                    <div class="col-md-6">
-                        <c-card [color]="'light'">
+                    <div class="col-md-4">
+
+                            <c-card [color]="'light'">
                             <c-card-body class="bg-gradient">
 
-                                <mat-form-field appearance="outline" class="dense-1 field-100" >
-                                    <mat-label>Servidor</mat-label>
-                                    <mat-select formControlName="servidor_id" style="color: #000;">
-                                        <mat-option>Nenhum</mat-option>
-                                        @for (servidor of servidores; track servidor) {
-                                            <mat-option [value]="servidor.id">{{servidor.nome}}</mat-option>
-                                        }
-                                    </mat-select>
-                                    <img matSuffix [src]="getServidorLogo()" class="icon-server">
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" class="dense-1 field-100" >
-                                  <mat-label>Url</mat-label>
-                                  <mat-select formControlName="url" style="color: #000;">
-                                      @for (url of urls; track url) {
-                                          <mat-option [value]="url">{{url}}</mat-option>
-                                      }
-                                  </mat-select>
-                              </mat-form-field>
 
                                 <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
                                     <mat-label class="color-field">Dispositivo</mat-label>
@@ -165,7 +191,7 @@
                                         }
                                 </mat-form-field>
 
-                                <mat-form-field appearance="outline" class="dense-1 field-100">
+                                <mat-form-field appearance="outline" class="dense-1 field-100 rm-space-bottom">
                                     <mat-label class="color-field">Vencimento Aplicativo</mat-label>
                                     <input
                                         matInput
