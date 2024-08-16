@@ -122,15 +122,15 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
 
     checkVencimentoApp (id: string): any {
         const item = this.dataSource.data.find(item => item.id === id);
-        if (item) {
+
+        if (item.app_vencimento) {
             const app_vencimento = item.app_vencimento;
             const [ano, mes, dia] = app_vencimento.split('-').map(Number);
             const data = new Date(ano, mes - 1, dia);
             const today = new Date();
             return data > today ? false : true;
-        } else {
-            console.error('Item não encontrado!');
         }
+
     }
 
     getServidorLogo(id: any): string {
