@@ -1,12 +1,17 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonToggleChange, MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { CardModule } from '@coreui/angular';
+import { CardModule, FormModule } from '@coreui/angular';
+import { format, formatDate } from 'date-fns';
 import { DecimalPipeFormat } from "../../../../pipes/decimal.pipe";
 import { CrudService } from './../../../../core/services/crud.service';
 import { SwalService } from './../../../../core/services/swal.service';
@@ -22,14 +27,18 @@ import { FormLancamentoComponent } from './../../lancamento/form-lancamento/form
     imports: [
         CardModule,
         MatIconModule,
-        //MatFormFieldModule,
+        MatFormFieldModule,
+        FormModule,
+        ReactiveFormsModule,
         MatInputModule,
         MatTableModule,
         MatSortModule,
         MatPaginatorModule,
         MatDialogModule,
         DecimalPipeFormat,
-        NgClass
+        NgClass,
+        MatDatepickerModule,
+        MatButtonToggleModule
     ],
 })
 export class IndexLancamentoComponent implements OnInit{
@@ -38,12 +47,19 @@ export class IndexLancamentoComponent implements OnInit{
     dialog          = inject(MatDialog);
     dataPipe        = inject(DatePipe);
     swalService     = inject(SwalService);
+    formBuilder     = inject(FormBuilder);
 
     @ViewChild(MatSort) sort!: MatSort;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+    change: EventEmitter<MatButtonToggleChange> = new EventEmitter<MatButtonToggleChange>();
+
+
+    filtroLancamentos = new FormControl('');
+
     dataSource = new MatTableDataSource<any>([]);
     servidores: any = [];
+    lancamentosAtivos: boolean = true;
 
     columns = [
         {
@@ -85,9 +101,30 @@ export class IndexLancamentoComponent implements OnInit{
 
     displayedColumns = this.columns.map(c => c.columnDef);
 
+    date = new Date();
+    first = formatDate(new Date(this.date.getFullYear(), this.date.getMonth(), 1), 'yyyy-MM-dd');
+    last = formatDate(new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0), 'yyyy-MM-dd');
+
+    form = this.formBuilder.group({
+        data_inicio : [this.first],
+        data_fim : [this.last],
+        status : [false]
+    })
+
+    onToggleChange(event: MatButtonToggleChange) {
+
+      this.form.value.status = event.value;
+      console.log('onToggleChange: ', this.form.value);
+
+      //this.change.emit(event);
+      this.index();
+    }
+
     ngOnInit(): void {
         this.index();
         this.getServidores();
+        this.lancamentosAtivos = localStorage.getItem('lancamentosAtivos') == 'true' ? true : false
+
     }
 
     ngAfterViewInit() {
@@ -96,7 +133,29 @@ export class IndexLancamentoComponent implements OnInit{
     }
 
     index(){
-        this.crudService.index('lancamentos').subscribe({
+
+        let data_inicio = this.form.value.data_inicio;
+        let data_fim = this.form.value.data_fim;
+
+        if (data_inicio) {
+            data_inicio = format(data_inicio, 'yyyy-MM-dd');
+        } else {
+            console.error('Data inválida');
+        }
+
+        if (data_fim) {
+            data_fim = format(data_fim, 'yyyy-MM-dd');
+        } else {
+            console.error('Data inválida');
+        }
+
+        const formValue = {
+            ...this.form.value,
+            data_inicio,
+            data_fim
+        };
+
+        this.crudService.index('lancamentos',this.form.value).subscribe({
             next: lancamentos => {
 
                 this.dataSource.data = lancamentos.map((lancamento: any) => ({
@@ -156,6 +215,14 @@ export class IndexLancamentoComponent implements OnInit{
             }
         })
     }
+
+
+    getLancamentosAtivos() {
+      this.lancamentosAtivos = !this.lancamentosAtivos;
+      localStorage['lancamentosAtivos'] = this.lancamentosAtivos;
+      this.form.value.status = this.lancamentosAtivos ? true : false;
+      this.index();
+  }
 
     openFormDialog(id: number) {
         const dialogRef = this.dialog.open(FormLancamentoComponent, {

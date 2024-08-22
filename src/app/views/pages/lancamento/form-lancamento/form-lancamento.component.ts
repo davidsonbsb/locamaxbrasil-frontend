@@ -51,7 +51,7 @@ export class FormLancamentoComponent{
     dataPipe    = inject(DatePipe);
     data        = inject(MAT_DIALOG_DATA);
     formBuilder = inject(FormBuilder);
-    dialogRef = inject(MatDialogRef<any>);
+    dialogRef   = inject(MatDialogRef<any>);
 
     action: string = '';
     adicionar: boolean = false;
