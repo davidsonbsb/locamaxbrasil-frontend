@@ -11,8 +11,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BorderDirective, CardModule } from '@coreui/angular';
+import { formatDate } from 'date-fns';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { SwalService } from 'src/app/core/services/swal.service';
+
+
 
 @Component({
     selector: 'app-form-cliente',
@@ -61,7 +64,7 @@ export class FormClienteComponent {
         'DupleCast',
         'XCloud',
         'XCIPTV',
-        'Cloud',
+        'Clouddy',
         'STB',
         'Smarters',
         'Meta',
@@ -79,12 +82,15 @@ export class FormClienteComponent {
         { "id" : 'mega', "desc" : "Premium" }
     ];
 
+    date = new Date();
+    dateLancamento = formatDate(new Date(this.date.setMonth(this.date.getMonth() +1)), 'yyyy-MM-dd');
+
     form = this.formBuilder.group({
         nome : ['',Validators.required],
         telefone : ['',Validators.required],
         valor : ['',Validators.required],
         plano : ['',Validators.required],
-        vencimento : ['',Validators.required],
+        vencimento : [this.dateLancamento ,Validators.required],
         usuario : ['',Validators.required],
         servidor_id : ['',Validators.required],
         url: [''],
@@ -130,6 +136,8 @@ export class FormClienteComponent {
     }
 
     init() {
+
+      console.log('dateLancamento',this.dateLancamento);
 
         if (this.action === 'visualizar') {
             for (const controlName in this.form.controls) {

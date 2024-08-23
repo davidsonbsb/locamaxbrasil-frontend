@@ -144,7 +144,6 @@
                             <c-card [color]="'light'">
                             <c-card-body class="bg-gradient">
 
-
                                 <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
                                     <mat-label class="color-field">Dispositivo</mat-label>
                                     <input
@@ -187,7 +186,7 @@
                                         style="color: #000;"
                                         >
                                         @if (!adicionar){
-                                          <mat-icon class="button-copy" matIconSuffix [cdkCopyToClipboard]="cliente.app_id" (cdkCopyToClipboardCopied)="onCopy($event)">content_copy</mat-icon>
+                                          <mat-icon class="button-copy" matIconSuffix [cdkCopyToClipboard]="cliente.app_key" (cdkCopyToClipboardCopied)="onCopy($event)">content_copy</mat-icon>
                                         }
                                 </mat-form-field>
 
