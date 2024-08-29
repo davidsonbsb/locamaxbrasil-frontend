@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SwalService } from './swal.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
     http = inject(HttpClient)
+    swalService = inject(SwalService)
 
     token?: any;
     apiHost: any = localStorage.getItem('apiHost');
@@ -43,10 +45,10 @@ export class AuthService {
 
     isAuthenticated(): boolean {
         // Verifique se o token está presente e se ainda é válido
-        return !!this.token && !this.isTokenExpired(this.token);
+        return !!this.token && !this.isTokenExpired();
     }
 
-    private isTokenExpired(token: string): boolean {
+    private isTokenExpired(): boolean {
 
       let status = this.http.get<any>(`${this.apiHost}/check-token`);
 
@@ -60,6 +62,7 @@ export class AuthService {
         },
         error: err => {
           console.error('err: ', err.error);
+          this.swalService.swalToaster('error','',err.error.error);
           return false;
 
         }

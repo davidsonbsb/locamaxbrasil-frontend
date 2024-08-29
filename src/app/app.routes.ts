@@ -19,7 +19,7 @@ export const routes: Routes = [
       {
         canActivate: [supportGuard],
         path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/routes').then((m) => m.routes)
+        loadChildren: () => import('./views/pages/dashboard/routes').then((m) => m.routes)
       },
       {
         canActivate: [supportGuard],
