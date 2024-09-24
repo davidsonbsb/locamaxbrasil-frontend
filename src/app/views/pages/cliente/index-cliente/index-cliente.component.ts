@@ -114,10 +114,21 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
     }
 
     checkVencimento (vencimento: string) {
-        const [dia, mes, ano] = vencimento.split('/').map(Number);
-        const data = new Date(ano, mes - 1, dia);
+        //const [dia, mes, ano] = vencimento.split('/').map(Number);
+        //const data = new Date(ano, mes - 1, dia);
+        const data = new Date(vencimento);
         const today = new Date();
-        return data > today ? false : true;
+        const week = new Date(new Date().setDate(new Date().getDate() + 1));
+
+        if(data <= today){
+          return 'expirado'
+        }
+
+        if (data >= today && data <= week){
+          return 'expirando'
+        }
+
+        return 'caiu'
     }
 
     checkVencimentoApp (id: string): any {
@@ -128,7 +139,17 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
             const [ano, mes, dia] = app_vencimento.split('-').map(Number);
             const data = new Date(ano, mes - 1, dia);
             const today = new Date();
-            return data > today ? false : true;
+            const week = new Date(new Date().setDate(new Date().getDate() + 7));
+
+            if(data <= today){
+              return 'expirado'
+            }
+
+            if (data >= today && data <= week){
+              return 'expirando'
+            }
+
+            return ''
         }
 
     }

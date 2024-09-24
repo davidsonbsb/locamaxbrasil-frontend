@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { CardModule } from '@coreui/angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 import { Chart } from 'chart.js';
@@ -8,10 +9,10 @@ import { ClienteService } from './../../../core/services/cliente.service';
     templateUrl: 'dashboard.component.html',
     styleUrls: ['dashboard.component.scss'],
     standalone: true,
-    //imports: [WidgetsDropdownComponent, TextColorDirective, CardComponent, CardBodyComponent, RowComponent, ColComponent, ButtonDirective, IconDirective, ReactiveFormsModule, ButtonGroupComponent, FormCheckLabelDirective, ChartjsComponent, NgStyle, CardFooterComponent, GutterDirective, ProgressBarDirective, ProgressComponent, WidgetsBrandComponent, CardHeaderComponent, TableDirective, AvatarComponent]
     imports: [
         ChartjsModule,
-        CardModule
+        CardModule,
+        MatIcon
         ]
 })
 export class DashboardComponent implements OnInit {

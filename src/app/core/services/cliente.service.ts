@@ -24,4 +24,8 @@ export class ClienteService {
       return this.http.get(`${this.apiHost}/clientes/totalStatus`);
     }
 
+    clientesApps(): Observable<any> {
+      return this.http.get(`${this.apiHost}/clientesApps`);
+    }
+
 }
