@@ -12,6 +12,7 @@ import { CardModule } from '@coreui/angular';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { SwalService } from 'src/app/core/services/swal.service';
 import { FormClienteComponent } from '../form-cliente/form-cliente.component';
+import { ClienteService } from './../../../../core/services/cliente.service';
 
 
 @Component({
@@ -34,10 +35,11 @@ import { FormClienteComponent } from '../form-cliente/form-cliente.component';
 })
 export class IndexClienteComponent implements OnInit, AfterViewInit{
 
-    crudService = inject(CrudService);
-    dataPipe    = inject(DatePipe);
-    dialog      = inject(MatDialog);
-    swalService = inject(SwalService);
+    crudService     = inject(CrudService);
+    clienteService  = inject(ClienteService);
+    dataPipe        = inject(DatePipe);
+    dialog          = inject(MatDialog);
+    swalService     = inject(SwalService);
 
     @ViewChild(MatSort) sort!: MatSort;
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -73,6 +75,11 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
             header: 'Status',
             cell: (element: any) => `${element.status}`,
         },
+        {
+          columnDef: 'renovar',
+          header: 'Renovar',
+          cell: (element: any) => `${element.status}`,
+      },
 
     ];
 
@@ -203,7 +210,6 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
     }
 
     updateStatus(id: number){
-
         const item = this.dataSource.data.find(item => item.id === id);
 
         if (item) {
@@ -221,5 +227,26 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
             console.error('Item não encontrado!');
         }
 
+    }
+
+    renovarCliente(id: number){
+      const item = this.dataSource.data.find(item => item.id === id);
+
+      if (item) {
+
+          this.clienteService.renovar( id ).subscribe({
+              next: response => {
+                const vencimento = this.dataPipe.transform(response.vencimento, 'dd/MM/yyyy')
+                this.swalService.swalRenovacao('Cliente '+response.nome+' foi renovado para '+ vencimento );
+                this.index();
+              },
+              error: err => {
+              console.error('Error updating status', err);
+              this.swalService.swalToaster('error','','Erro ao renovar cliente: '+err);
+              }
+          });
+      } else {
+          console.error('Item não encontrado!');
+      }
     }
 }

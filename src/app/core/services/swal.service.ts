@@ -50,4 +50,18 @@ export class SwalService {
         });
     }
 
+
+    swalRenovacao (
+      text : string,
+        ){
+        return Swal.fire({
+            icon: 'success',
+            title: 'Renovação',
+            text: text,
+
+            })
+    }
+
+
+
 }

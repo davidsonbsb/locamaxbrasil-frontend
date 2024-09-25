@@ -34,7 +34,15 @@
             @else if (column.header == 'Status' && (column.cell(row) == '0' || column.cell(row) == 'false')) {
                 <mat-icon class="icon-action text-danger" (click)="updateStatus(row.id)">highlight_off</mat-icon>
             }
-        </span>
+          </span>
+
+          <span (click)="$event.stopPropagation();">
+            @if (column.header == 'Renovar') {
+                <mat-icon class="icon-action text-success" (click)="renovarCliente(row.id)">cached</mat-icon>
+            }
+          </span>
+
+
 
            <!--  @if (column.header == 'Vencimento') {
                 <span [ngClass]="{'text-dark' : checkVencimento(column.cell(row)) == 'expirado'}"> {{column.cell(row)}} </span>
@@ -52,7 +60,7 @@
                 R$ {{(column.cell(row))}}
             }
 
-            @else if (column.header != 'Status'){
+            @else if (column.header != 'Status' && column.header != 'Renovar' ){
                 {{column.cell(row)}}
             }
 

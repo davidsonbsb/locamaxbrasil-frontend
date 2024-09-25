@@ -28,4 +28,8 @@ export class ClienteService {
       return this.http.get(`${this.apiHost}/clientesApps`);
     }
 
+    renovar(id: number): Observable<any> {
+      return this.http.get(`${this.apiHost}/cliente/${id}/renovar`);
+  }
+
 }
