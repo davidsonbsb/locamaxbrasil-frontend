@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ActivatedRoute, RouterLinkActive } from '@angular/router';
 import { BorderDirective, CardModule } from '@coreui/angular';
-import { format, formatDate } from 'date-fns';
+import { format, formatDate, parseISO } from 'date-fns';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { SwalService } from 'src/app/core/services/swal.service';
 import { DecimalPipeFormat } from '../../../../pipes/decimal.pipe';
@@ -154,9 +154,11 @@ export class FormLancamentoComponent{
     salvar() {
 
         let value = this.form.value.data;
+        console.log('this.form.value.data: ', this.form.value.data);
 
         if (value) {
-          this.form.value.data = format(value, 'yyyy-MM-dd');
+          this.form.value.data = format( parseISO(value), 'yyyy-MM-dd');
+          console.log('this.form.value.data 2: ', this.form.value.data);
         } else {
           console.error('Data inválida');
         }

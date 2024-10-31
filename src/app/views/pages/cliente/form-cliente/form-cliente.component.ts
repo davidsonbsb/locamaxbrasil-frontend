@@ -4,7 +4,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +14,7 @@ import { BorderDirective, CardModule } from '@coreui/angular';
 import { formatDate } from 'date-fns';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { SwalService } from 'src/app/core/services/swal.service';
+import { LancamentoComponent } from '../../lancamento/lancamento/lancamento.component';
 
 
 
@@ -48,6 +49,7 @@ export class FormClienteComponent {
     dialogRef   = inject(MatDialogRef<any>);
     data        = inject<any>(MAT_DIALOG_DATA);
     dataPipe    = inject(DatePipe);
+    dialog          = inject(MatDialog);
 
     action: string = '';
     adicionar: boolean = false;
@@ -60,26 +62,26 @@ export class FormClienteComponent {
     urls: string[] = [];
 
     apps: string[] = [
-        'Duplex',
-        'DupleCast',
-        'XCloud',
-        'XCIPTV',
-        'Clouddy',
-        'STB',
-        'Smarters',
-        'Meta',
-        'Web',
-        'DreamTV',
-        'LazerPlay',
-        'Club Lite',
-        'Club Smart',
-        'P2P',
+          'Clouddy',
+          'DreamTV',
+          'DupleCast',
+          'Duplex',
+          'LazerPlay',
+          'Multiplayer V1',
+          'Multiplayer V2',
+          'P2P',
+          'Prime',
+          'STB',
+          'Smarters',
+          'Web',
+          'XCIPTV',
+          'XCloudTV'
     ];
 
     planos: Array<any> = [
         { "id" : 'pop' , "desc" : "Pop" },
         { "id" : 'mega', "desc" : "Mega" },
-        { "id" : 'mega', "desc" : "Premium" }
+        { "id" : 'premium', "desc" : "Premium" }
     ];
 
     date = new Date();
@@ -136,8 +138,6 @@ export class FormClienteComponent {
     }
 
     init() {
-
-      console.log('dateLancamento',this.dateLancamento);
 
         if (this.action === 'visualizar') {
             for (const controlName in this.form.controls) {
@@ -279,5 +279,19 @@ export class FormClienteComponent {
             }
         })
     }
+
+    modalLancamentos(id: number) {
+      this.dialogRef.close();
+      const dialogRef = this.dialog.open(LancamentoComponent, {
+          //panelClass: 'dialog',
+          height: '590px',
+          width: '900px',
+          data: { cliente_id : id }
+      });
+
+      dialogRef.updatePosition({top: '120px'});
+
+  }
+
 
 }

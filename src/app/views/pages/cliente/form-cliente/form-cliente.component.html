@@ -85,9 +85,6 @@
                         </mat-form-field>
                           </c-card-body>
                           </c-card>
-
-
-
                     </div>
                     <div class="col-md-4 mb-2">
                       <c-card [color]="'light'">
@@ -220,6 +217,12 @@
                             </button>
                         }
                     </div>
+
+                    <button
+                        class="btn btn-sm btn-info mx-1 my-3 flex-row-reverse"
+                        (click)="modalLancamentos(cliente.id)"
+                        >Lançamentos
+                    </button>
                     @if (!adicionar){
                         <button
                             class="btn btn-sm btn-primary mx-1 my-3"

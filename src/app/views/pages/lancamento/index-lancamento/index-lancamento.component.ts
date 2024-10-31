@@ -187,7 +187,12 @@ export class IndexLancamentoComponent implements OnInit{
 
     updateStatus(id: number){
         const item = this.dataSource.data.find(item => item.id === id);
+
         if (item) {
+            if(!item.status){
+              this.renovacao(item);
+            }
+
             item.status = item.status === 1 ? 0 : 1;
             this.crudService.updateStatus( id, 'lancamento').subscribe({
                 next: response => {
@@ -222,7 +227,7 @@ export class IndexLancamentoComponent implements OnInit{
       localStorage['lancamentosAtivos'] = this.lancamentosAtivos;
       this.form.value.status = this.lancamentosAtivos ? true : false;
       this.index();
-  }
+    }
 
     openFormDialog(id: number) {
         const dialogRef = this.dialog.open(FormLancamentoComponent, {
@@ -260,6 +265,32 @@ export class IndexLancamentoComponent implements OnInit{
         this.index();
 
         });
+    }
+
+    renovacao(item: any) {
+
+      //{"cliente_id":162,"valor":"2","tipo":"Recebimento","banco_id":2,"data":"2024-09-23","status":false,"observacao":""}
+
+      delete item.id;
+      delete item.updated_at;
+      delete item.created_at;
+
+      const data = new Date(item.data);
+      data.setMonth(data.getMonth() + 1);
+      data.setDate(data.getDate() + 1);
+
+      item.data = format(data, 'yyyy-MM-dd');
+
+      this.crudService.store(item,'lancamento').subscribe({
+        next: response =>{
+          console.log('response: ', response);
+            this.swalService.swalToaster('success','','Lançamento adicionado com sucesso!');
+        },
+        error: err => {
+            console.error(err.error.message);
+            this.swalService.swalToaster('error','','Erro ao adicionar cliente!');
+        }
+      })
     }
 
 

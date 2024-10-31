@@ -1,4 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { catchError, throwError } from 'rxjs';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
@@ -12,7 +13,16 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     }
   });
 
-  return next(clonedRequest);
+  //return next(clonedRequest);
 
-  //return next(req);
+  return next(clonedRequest).pipe(
+    catchError(error => {
+      if (error.status === 401) {
+        // Redireciona o usuário para a página de login ou trata o erro de autenticação
+        console.error('Token expirado ou inválido. Redirecionando para login...');
+        window.location.href = '#/login'; 
+      }
+      return throwError(error); // Retorna o erro para ser tratado onde a requisição foi feita
+    })
+  );
 };
