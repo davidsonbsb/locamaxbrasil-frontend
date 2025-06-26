@@ -42,7 +42,11 @@
             }
           </span>
 
-
+            <span (click)="$event.stopPropagation();">
+              @if (column.header == 'Notificação' && column.cell(row) == '1') {
+                  <mat-icon class="icon-action text-primary" (click)="enviarNotificacao(row.id)">send</mat-icon>
+              }
+            </span>
 
            <!--  @if (column.header == 'Vencimento') {
                 <span [ngClass]="{'text-dark' : checkVencimento(column.cell(row)) == 'expirado'}"> {{column.cell(row)}} </span>
@@ -50,6 +54,10 @@
 
             @if (column.header == 'Aplicativo') {
                 <span [ngClass]="{'text-danger fw-bold': checkVencimentoApp(row.id) == 'expirado', 'text-warning fw-bold': checkVencimentoApp(row.id) == 'expirando'}"> {{column.cell(row)}} </span>
+            }
+
+            @else if (column.header == 'DNS' ) {
+              {{column.cell(row) == 'null' ? "" : column.cell(row)}}
             }
 
             @else if (column.header == 'Servidor' ) {
@@ -60,7 +68,7 @@
                 R$ {{(column.cell(row))}}
             }
 
-            @else if (column.header != 'Status' && column.header != 'Renovar' ){
+            @else if (column.header != 'Status' && column.header != 'Renovar' && column.header != 'Notificação'){
                 {{column.cell(row)}}
             }
 
@@ -75,7 +83,7 @@
   </c-card-body>
   <c-card-footer>
     <mat-paginator
-    [pageSizeOptions]="[10, 25, 100]"
+    [pageSizeOptions]="[10, 25, 50, 100]"
     aria-label="Selecione a pagina"
   ></mat-paginator>
   </c-card-footer>

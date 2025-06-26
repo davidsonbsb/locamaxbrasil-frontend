@@ -2,6 +2,7 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -15,8 +16,6 @@ import { formatDate } from 'date-fns';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { SwalService } from 'src/app/core/services/swal.service';
 import { LancamentoComponent } from '../../lancamento/lancamento/lancamento.component';
-
-
 
 @Component({
     selector: 'app-form-cliente',
@@ -36,7 +35,8 @@ import { LancamentoComponent } from '../../lancamento/lancamento/lancamento.comp
         MatInputModule,
         MatDatepickerModule,
         MatOptionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatCheckboxModule
     ]
 })
 export class FormClienteComponent {
@@ -73,6 +73,7 @@ export class FormClienteComponent {
           'Prime',
           'STB',
           'Smarters',
+          'TV Play',
           'Web',
           'XCIPTV',
           'XCloudTV'
@@ -103,6 +104,7 @@ export class FormClienteComponent {
         app_key : [''],
         app_vencimento : [''],
         observacao : [''],
+        notificacao_wpp : [''],
     })
 
     constructor() {
@@ -119,7 +121,7 @@ export class FormClienteComponent {
         this.init();
 
         this.form.get('servidor_id')!.valueChanges.subscribe(value => {
-          this.onServidorSelected(value);
+          //this.onServidorSelected(value);
         });
     }
 
@@ -186,6 +188,7 @@ export class FormClienteComponent {
             app_key : this.cliente.app_key,
             app_vencimento : this.cliente.app_vencimento,
             observacao : this.cliente.observacao,
+            notificacao_wpp : this.cliente.notificacao_wpp,
         });
     }
 

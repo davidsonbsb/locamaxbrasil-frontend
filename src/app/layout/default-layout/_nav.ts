@@ -25,12 +25,17 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-puzzle' },
   },
   {
-    name: 'Lançamentos',
+    name: 'Financeiro',
     title: true
   },
   {
     name: 'Lançamentos',
     url: '/lancamento',
     iconComponent: { name: 'cil-notes' },
+  },
+  {
+    name: 'Extrado',
+    url: '/extrato',
+    iconComponent: { name: 'cil-chart' },
   },
 ];

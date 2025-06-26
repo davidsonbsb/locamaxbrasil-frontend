@@ -71,6 +71,11 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
             cell: (element: any) => `${element.app}`,
         },
         {
+          columnDef: 'url',
+          header: 'DNS',
+          cell: (element: any) => `${element.url}`,
+        },
+        {
             columnDef: 'status',
             header: 'Status',
             cell: (element: any) => `${element.status}`,
@@ -79,7 +84,12 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
           columnDef: 'renovar',
           header: 'Renovar',
           cell: (element: any) => `${element.status}`,
-      },
+        },
+        {
+          columnDef: 'wpp',
+          header: 'Notificação',
+          cell: (element: any) => `${element.notificacao_wpp}`,
+        },
 
     ];
 
@@ -249,4 +259,20 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
           console.error('Item não encontrado!');
       }
     }
+
+    enviarNotificacao(id: number){
+
+      this.clienteService.enviarNotificacao( id ).subscribe({
+              next: response => {
+                this.swalService.swalToaster('success','','Notificação enviada com Sucesso!');
+                this.index();
+              },
+              error: err => {
+                console.error('Error updating status', err);
+                this.swalService.swalToaster('error','','Erro ao renovar cliente: '+err);
+              }
+          });
+
+    }
+
 }

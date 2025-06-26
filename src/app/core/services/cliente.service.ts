@@ -30,6 +30,10 @@ export class ClienteService {
 
     renovar(id: number): Observable<any> {
       return this.http.get(`${this.apiHost}/cliente/${id}/renovar`);
-  }
+    }
+
+    enviarNotificacao(id: number): Observable<any> {
+      return this.http.get(`${this.apiHost}/wpp/${id}/expirationReminder`);
+    }
 
 }

@@ -54,10 +54,10 @@
                     <th mat-header-cell *matHeaderCellDef>Status</th>
                     <td mat-cell *matCellDef="let element">
                       @if ((element.status == '1' || element.status == 'true')) {
-                        <mat-icon class="icon-action text-success" (click)="updateStatus(element.id)">thumb_up_alt</mat-icon>
+                        <mat-icon class="icon-action text-success" (click)="updateStatus(element.id); $event.stopPropagation()">thumb_up_alt</mat-icon>
                       }
                       @if ((element.status == '0' || element.status == 'false')) {
-                        <mat-icon class="icon-action text-secondary" (click)="updateStatus(element.id)">thumb_down_alt</mat-icon>
+                        <mat-icon class="icon-action text-secondary" (click)="updateStatus(element.id); $event.stopPropagation()">thumb_down_alt</mat-icon>
                       }
                     </td>
                   </ng-container>
@@ -69,7 +69,7 @@
                         <mat-icon class="icon-action text-secondary" disabled>block</mat-icon>
                       }
                       @if ((element.status == '0' || element.status == 'false')) {
-                        <mat-icon class="icon-action text-danger" (click)="excluir(element.id)">delete</mat-icon>
+                        <mat-icon class="icon-action text-danger" (click)="excluir(element.id); $event.stopPropagation()" >delete</mat-icon>
                       }
                     </td>
                   </ng-container>

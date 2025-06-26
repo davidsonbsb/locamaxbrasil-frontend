@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
+import { ExtratoComponent } from '../extrato/extrato.component';
 import { FormLancamentoComponent } from './form-lancamento/form-lancamento.component';
 import { IndexLancamentoComponent } from './index-lancamento/index-lancamento.component';
-import { LancamentoComponent } from './lancamento/lancamento.component';
 
 export const routes: Routes = [
     {
@@ -33,10 +33,10 @@ export const routes: Routes = [
         }
     },
     {
-      path: 'teste',
-      component: LancamentoComponent,
+      path: 'extrato',
+      component: ExtratoComponent,
       data: {
-          title: $localize`Lancamento / Editar`
+          title: $localize`Extrato `
       }
-  }
+    }
 ];

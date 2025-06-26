@@ -35,6 +35,11 @@ export const routes: Routes = [
         canActivate: [supportGuard],
         path: 'lancamento',
         loadChildren: () => import('./views/pages/lancamento/routes').then((m) => m.routes)
+      },
+      {
+        canActivate: [supportGuard],
+        path: 'extrato',
+        loadChildren: () => import('./views/pages/extrato/routes').then((m) => m.routes)
       }
     ]
   },
