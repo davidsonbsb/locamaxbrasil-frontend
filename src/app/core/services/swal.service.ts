@@ -62,6 +62,22 @@ export class SwalService {
             })
     }
 
+    swalFire (
+      text : string,
+      status: boolean
+    ){
+      return Swal.fire({
+        icon: 'warning',
+        title: text,
+        iconColor: "#c7513f",
+        showDenyButton: status,
+        showCancelButton: true,
+        showConfirmButton: !status,
+        confirmButtonText: 'Adicionar',
+        confirmButtonColor: "#4ac73fff",
+        denyButtonText: 'Remover',
+      })
 
+    }
 
 }

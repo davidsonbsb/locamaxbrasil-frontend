@@ -61,6 +61,16 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
             cell: (element: any) => `${element.servidor_id}`,
         },
         {
+            columnDef: 'grupo_fut',
+            header: 'Futebol',
+            cell: (element: any) => `${element.grupo_fut}`,
+        },
+        {
+            columnDef: 'grupo_vod',
+            header: 'Vods',
+            cell: (element: any) => `${element.grupo_vod}`,
+        },
+        {
             columnDef: 'vencimento',
             header: 'Vencimento',
             cell: (element: any) => `${element.vencimentoFormat}`,
@@ -273,6 +283,41 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
               }
           });
 
+    }
+
+    updateGrupo(id: number, grupo: string, status: boolean){
+
+      this.swalService.swalFire('Deseja alterar cliente do Grupo?', status).then(result => {
+
+        if (result.isConfirmed){
+          this.clienteService.addGrupo( id , grupo ).subscribe({
+              next: response => {
+                this.swalService.swalToaster('success','','Cliente adicionado com Sucesso!');
+                this.index();
+              },
+              error: err => {
+                console.error('Error updating status', err);
+                this.swalService.swalToaster('error','','Erro ao renovar cliente: '+err);
+                this.index();
+              }
+          });
+        }
+
+        if (result.isDenied){
+          this.clienteService.removeGrupo( id , grupo ).subscribe({
+              next: response => {
+                this.swalService.swalToaster('success','','Cliente removido com Sucesso!');
+                this.index();
+              },
+              error: err => {
+                console.error('Error updating status', err);
+                this.swalService.swalToaster('error','','Erro ao renovar cliente: '+err);
+                this.index();
+              }
+          });
+        }
+
+      })
     }
 
 }

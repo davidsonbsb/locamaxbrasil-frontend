@@ -36,4 +36,12 @@ export class ClienteService {
       return this.http.get(`${this.apiHost}/wpp/${id}/expirationReminder`);
     }
 
+    addGrupo(id: number, grupo: string): Observable<any> {
+      return this.http.get(`${this.apiHost}/cliente/${id}/add/${grupo}`);
+    }
+
+    removeGrupo(id: number, grupo: string): Observable<any> {
+      return this.http.get(`${this.apiHost}/cliente/${id}/remove/${grupo}`);
+    }
+
 }

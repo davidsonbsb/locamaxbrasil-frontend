@@ -40,6 +40,11 @@ export const routes: Routes = [
         canActivate: [supportGuard],
         path: 'extrato',
         loadChildren: () => import('./views/pages/extrato/routes').then((m) => m.routes)
+      },
+      {
+        canActivate: [supportGuard],
+        path: 'novidades',
+        loadChildren: () => import('./views/pages/novidades/routes').then((m) => m.routes)
       }
     ]
   },

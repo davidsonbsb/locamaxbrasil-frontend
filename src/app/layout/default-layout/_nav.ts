@@ -38,4 +38,9 @@ export const navItems: INavData[] = [
     url: '/extrato',
     iconComponent: { name: 'cil-chart' },
   },
+  {
+    name: 'Novidadades',
+    url: '/novidades',
+    iconComponent: { name: 'cil-chart' },
+  },
 ];

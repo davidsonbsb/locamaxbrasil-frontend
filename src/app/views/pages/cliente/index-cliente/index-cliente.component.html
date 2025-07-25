@@ -25,22 +25,42 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header style="background-color: #DDD;">
           {{column.header}}
         </th>
-        <td mat-cell *matCellDef="let row" (click)="openFormDialog(row.id)" [ngClass]="{'bg-danger fw-bold': checkVencimento(row.vencimento) == 'expirado', 'bg-warning fw-bold': checkVencimento(row.vencimento) == 'expirando'}">
-          <span (click)="$event.stopPropagation();">
-            @if (column.header == 'Status' && (column.cell(row) == '1' || column.cell(row) == 'true')) {
-                <mat-icon class="icon-action text-success" (click)="updateStatus(row.id)">task_alt</mat-icon>
-            }
+        <td mat-cell *matCellDef="let row" (click)="openFormDialog(row.id)" [ngClass]="{'bg-danger bg-opacity-75 fw-bold': checkVencimento(row.vencimento) == 'expirado', 'bg-warning fw-bold': checkVencimento(row.vencimento) == 'expirando'}">
+            <span (click)="$event.stopPropagation();">
+              @if (column.header == 'Status' && (column.cell(row) == '1' || column.cell(row) == 'true')) {
+                  <mat-icon class="icon-action text-success" (click)="updateStatus(row.id)">task_alt</mat-icon>
+              }
 
-            @else if (column.header == 'Status' && (column.cell(row) == '0' || column.cell(row) == 'false')) {
-                <mat-icon class="icon-action text-danger" (click)="updateStatus(row.id)">highlight_off</mat-icon>
-            }
-          </span>
+              @else if (column.header == 'Status' && (column.cell(row) == '0' || column.cell(row) == 'false')) {
+                  <mat-icon class="icon-action text-danger" (click)="updateStatus(row.id)">highlight_off</mat-icon>
+              }
+            </span>
 
-          <span (click)="$event.stopPropagation();">
-            @if (column.header == 'Renovar') {
-                <mat-icon class="icon-action text-success" (click)="renovarCliente(row.id)">cached</mat-icon>
-            }
-          </span>
+            <span (click)="$event.stopPropagation();">
+              @if (column.header == 'Futebol' && (column.cell(row) == '1' || column.cell(row) == 'true')) {
+                  <mat-icon class="icon-action text-success" (click)="updateGrupo(row.id, 'GrupoFut', row.grupo_fut)">sports_soccer</mat-icon>
+              }
+
+              @else if (column.header == 'Futebol' && (column.cell(row) == '0' || column.cell(row) == 'false')) {
+                  <mat-icon class="icon-action text-danger" (click)="updateGrupo(row.id, 'GrupoFut', row.grupo_fut)">sports_soccer</mat-icon>
+              }
+            </span>
+
+             <span (click)="$event.stopPropagation();">
+              @if (column.header == 'Vods' && (column.cell(row) == '1' || column.cell(row) == 'true')) {
+                  <mat-icon class="icon-action text-success" (click)="updateGrupo(row.id, 'GrupoVod', row.grupo_vod)">movie</mat-icon>
+              }
+
+              @else if (column.header == 'Vods' && (column.cell(row) == '0' || column.cell(row) == 'false')) {
+                  <mat-icon class="icon-action text-danger" (click)="updateGrupo(row.id, 'GrupoVod', row.grupo_vod)">movie</mat-icon>
+              }
+            </span>
+
+            <span (click)="$event.stopPropagation();">
+              @if (column.header == 'Renovar') {
+                  <mat-icon class="icon-action text-success" (click)="renovarCliente(row.id)">cached</mat-icon>
+              }
+            </span>
 
             <span (click)="$event.stopPropagation();">
               @if (column.header == 'Notificação' && column.cell(row) == '1') {
@@ -68,7 +88,11 @@
                 R$ {{(column.cell(row))}}
             }
 
-            @else if (column.header != 'Status' && column.header != 'Renovar' && column.header != 'Notificação'){
+            @else if (column.header != 'Status' &&
+                      column.header != 'Renovar' &&
+                      column.header != 'Notificação' &&
+                      column.header != 'Futebol' &&
+                      column.header != 'Vods'){
                 {{column.cell(row)}}
             }
 
