@@ -9,6 +9,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CardModule } from '@coreui/angular';
+import { format } from 'date-fns';
 import { CrudService } from 'src/app/core/services/crud.service';
 import { SwalService } from 'src/app/core/services/swal.service';
 import { FormClienteComponent } from '../form-cliente/form-cliente.component';
@@ -319,5 +320,28 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
 
       })
     }
+
+    criaLancamento(item: any) {
+
+          delete item.id;
+          delete item.updated_at;
+          delete item.created_at;
+
+          const data = new Date(item.data);
+          data.setMonth(data.getMonth() + 1);
+          data.setDate(data.getDate() + 1);
+
+          item.data = format(data, 'yyyy-MM-dd');
+
+          this.crudService.store(item,'lancamento').subscribe({
+            next: response =>{
+                this.swalService.swalToaster('success','','Lançamento adicionado com sucesso!');
+            },
+            error: err => {
+                console.error(err.error.message);
+                this.swalService.swalToaster('error','','Erro ao adicionar cliente!');
+            }
+          })
+        }
 
 }

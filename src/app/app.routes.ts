@@ -38,6 +38,11 @@ export const routes: Routes = [
       },
       {
         canActivate: [supportGuard],
+        path: 'wpp-send-lote',
+        loadChildren: () => import('./views/pages/wpp-send-lote/routes').then((m) => m.routes)
+      },
+      {
+        canActivate: [supportGuard],
         path: 'extrato',
         loadChildren: () => import('./views/pages/extrato/routes').then((m) => m.routes)
       },

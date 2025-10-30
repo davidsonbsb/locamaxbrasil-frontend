@@ -44,4 +44,8 @@ export class ClienteService {
       return this.http.get(`${this.apiHost}/cliente/${id}/remove/${grupo}`);
     }
 
+    enviarMsgLote(obj: object): Observable<any> {
+        return this.http.post(`${this.apiHost}/enviarMsgLote/`, obj);
+    }
+
 }

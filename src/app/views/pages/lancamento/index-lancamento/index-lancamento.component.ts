@@ -54,7 +54,6 @@ export class IndexLancamentoComponent implements OnInit{
 
     change: EventEmitter<MatButtonToggleChange> = new EventEmitter<MatButtonToggleChange>();
 
-
     filtroLancamentos = new FormControl('');
 
     dataSource = new MatTableDataSource<any>([]);
@@ -221,7 +220,6 @@ export class IndexLancamentoComponent implements OnInit{
         })
     }
 
-
     getLancamentosAtivos() {
       this.lancamentosAtivos = !this.lancamentosAtivos;
       localStorage['lancamentosAtivos'] = this.lancamentosAtivos;
@@ -283,7 +281,6 @@ export class IndexLancamentoComponent implements OnInit{
 
       this.crudService.store(item,'lancamento').subscribe({
         next: response =>{
-          console.log('response: ', response);
             this.swalService.swalToaster('success','','Lançamento adicionado com sucesso!');
         },
         error: err => {

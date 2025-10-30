@@ -25,6 +25,11 @@ export const navItems: INavData[] = [
     iconComponent: { name: 'cil-puzzle' },
   },
   {
+    name: 'WhatsApp Lote',
+    url: '/wpp-send-lote',
+    iconComponent: { name: 'cil-paper-plane' },
+  },
+  {
     name: 'Financeiro',
     title: true
   },
@@ -32,9 +37,9 @@ export const navItems: INavData[] = [
     name: 'Lançamentos',
     url: '/lancamento',
     iconComponent: { name: 'cil-notes' },
-  },
+  }/* ,
   {
-    name: 'Extrado',
+    name: 'Extrato',
     url: '/extrato',
     iconComponent: { name: 'cil-chart' },
   },
@@ -42,5 +47,5 @@ export const navItems: INavData[] = [
     name: 'Novidadades',
     url: '/novidades',
     iconComponent: { name: 'cil-chart' },
-  },
+  }, */
 ];

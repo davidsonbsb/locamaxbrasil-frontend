@@ -1,0 +1,53 @@
+<form cForm [formGroup]="form">
+  <div class="row">
+    <c-card>
+      <c-card-header>Envio de menssagem em massa</c-card-header>
+      <c-card-body>
+        <div class="p-2 mt-2 col-6">
+
+            <mat-form-field appearance="outline" class="dense-1 field-100" >
+                <mat-label>Status Cliente</mat-label>
+                <mat-select formControlName="status" style="color: #000;">
+                    <mat-option>Nenhum</mat-option>
+                    <mat-option [value]="true">Ativos</mat-option>
+                    <mat-option [value]="false">Inativos</mat-option>
+                </mat-select>
+                <!-- <img matSuffix [src]="getServidorLogo()" class="icon-server"> -->
+            </mat-form-field>
+
+           <mat-form-field appearance="outline" class="dense-1 field-100" >
+                <mat-label>Servidor</mat-label>
+                <mat-select formControlName="servidor_id" style="color: #000;">
+                    <mat-option [value]="true">Todos</mat-option>
+                    @for (servidor of servidores; track servidor) {
+                        <mat-option [value]="servidor.id">{{servidor.nome}}</mat-option>
+                    }
+                </mat-select>
+                <!-- <img matSuffix [src]="getServidorLogo()" class="icon-server"> -->
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="dense-1 field-100 rm-space-bottom">
+                              <mat-label>Mensagem</mat-label>
+                              <textarea
+                                  matInput [rows]="5"
+                                  formControlName="msg"
+                                  style="color: #000;"
+                                  ></textarea>
+            </mat-form-field>
+
+        </div>
+      </c-card-body>
+
+      <c-card-footer>
+          <button
+                class="btn btn-sm btn-success mx-1 my-3"
+                [disabled]="form.invalid"
+                (click)="salvar()"
+                >Enviar
+          </button>
+        </c-card-footer>
+      </c-card>
+
+
+  </div>
+</form>

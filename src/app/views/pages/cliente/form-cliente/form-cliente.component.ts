@@ -49,7 +49,7 @@ export class FormClienteComponent {
     dialogRef   = inject(MatDialogRef<any>);
     data        = inject<any>(MAT_DIALOG_DATA);
     dataPipe    = inject(DatePipe);
-    dialog          = inject(MatDialog);
+    dialog      = inject(MatDialog);
 
     action: string = '';
     adicionar: boolean = false;
@@ -67,13 +67,16 @@ export class FormClienteComponent {
           'DupleCast',
           'Duplex',
           'LazerPlay',
+          'Hibrido',
           'Multiplayer V1',
           'Multiplayer V2',
           'P2P',
           'Prime',
           'STB',
           'Smarters',
+          'SSiptv',
           'TV Play',
+          'Ultra Player',
           'Web',
           'XCIPTV',
           'XCloudTV'
