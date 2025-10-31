@@ -10,6 +10,7 @@ import { RouterLink } from '@angular/router';
 import { BorderDirective, CardModule } from '@coreui/angular';
 import { ClienteService } from '../../../core/services/cliente.service';
 import { CrudService } from '../../../core/services/crud.service';
+import { SwalService } from '../../../core/services/swal.service';
 
 @Component({
   selector: 'app-wpp-send-lote',
@@ -35,6 +36,7 @@ export class WppSendLoteComponent {
   crudService = inject(CrudService);
   clienteService = inject(ClienteService);
   formBuilder = inject(FormBuilder);
+  swalService = inject(SwalService)
 
   servidores: any = [];
 
@@ -91,7 +93,11 @@ export class WppSendLoteComponent {
     //console.log('this.form.value: ', this.form.value);
     this.clienteService.enviarMsgLote(this.form.value).subscribe( {
             next: retorno => {
-              console.log('retorno: ', retorno);
+              if (retorno) {
+                this.swalService.swalToaster('success','','Disparo realizado com sucesso');
+              } else {
+                  this.swalService.swalToaster('error','','Erro ao realizar disparo');
+              }
             }
         })
   }

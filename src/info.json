@@ -1,7 +1,7 @@
 {
   "serverInfo": {
       "api": "api",
-      "host": "http://localhost:8000",
+      "host": "http://app.bravox.cloud:81",
       "build": "release/v0.1.0",
       "release": "release/v0.1.0"
   }
