@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -25,8 +26,9 @@ import { CrudService } from '../../../core/services/crud.service';
         ReactiveFormsModule,
         MatInputModule,
         MatOptionModule,
-        MatSelectModule
-  ]
+        MatSelectModule,
+        MatDatepickerModule
+      ]
 })
 export class WppSendLoteComponent {
 
@@ -37,10 +39,34 @@ export class WppSendLoteComponent {
   servidores: any = [];
 
   form = this.formBuilder.group({
-      status : null,
-      servidor_id : null,
-      msg : null,
+      status : ['',Validators.required],
+      servidor_id : ['',Validators.required],
+      msg : ['',Validators.required],
+      app : null,
+      data_inicio : null,
+      data_fim : null,
   });
+
+      apps: string[] = [
+          'Clouddy',
+          'DreamTV',
+          'DupleCast',
+          'Duplex',
+          'LazerPlay',
+          'Hibrido',
+          'Multiplayer V1',
+          'Multiplayer V2',
+          'P2P',
+          'Prime',
+          'STB',
+          'Smarters',
+          'SSiptv',
+          'TV Play',
+          'Ultra Player',
+          'Web',
+          'XCIPTV',
+          'XCloudTV'
+    ];
 
   constructor() {
     this.init();
