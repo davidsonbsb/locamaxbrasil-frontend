@@ -83,7 +83,9 @@ export class DashboardComponent implements OnInit {
                     }]
                     },
                     options: {
+                        indexAxis: 'y',
                         responsive: true,
+                        maintainAspectRatio: false,
                         plugins: {
                             title: {
                                 display: true,
@@ -96,6 +98,37 @@ export class DashboardComponent implements OnInit {
             }
         })
     }
+
+    /* getTotalClientesApps() {
+        this.clienteService.clientesTotalApps().subscribe({
+            next: response => {
+
+                const cores = this.gerarCoresAleatorias(response.label.length);
+                const ctx = document.getElementById('chartTotalApps') as HTMLCanvasElement;
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                    labels: response.label,
+                    datasets: [{
+                        label: 'Totais',
+                        data: response.data,
+                        backgroundColor: cores,
+                    }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Aplicativos Totais'
+                            }
+                        }
+                    }
+                });
+
+            }
+        })
+    } */
 
     getTotalClientesStatus() {
         this.clienteService.clientesTotalStatus().subscribe({
