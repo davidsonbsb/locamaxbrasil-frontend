@@ -62,6 +62,11 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
             cell: (element: any) => `${element.servidor_id}`,
         },
         {
+            columnDef: 'banco_id',
+            header: 'Banco',
+            cell: (element: any) => `${element.ultimo_lancamento.banco.nome}`,
+        },
+        {
             columnDef: 'grupo_fut',
             header: 'Futebol',
             cell: (element: any) => `${element.grupo_fut}`,
@@ -122,7 +127,7 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
         this.crudService.index('clientes', filtro).subscribe({
             next: clientes => {
                 this.dataSource.data = clientes.map((cliente: any) => ({
-                    vencimentoFormat: this.dataPipe.transform(cliente.vencimento, 'dd/MM/yyyy'),            ...cliente
+                    vencimentoFormat: this.dataPipe.transform(cliente.vencimento, 'dd/MM/yyyy'),...cliente
                 }));
             }
         })

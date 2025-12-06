@@ -4,6 +4,7 @@ import { CardModule } from '@coreui/angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
 import { Chart } from 'chart.js';
 import { ClienteService } from './../../../core/services/cliente.service';
+import { LancamentoService } from './../../../core/services/lancamento.service';
 
 @Component({
     templateUrl: 'dashboard.component.html',
@@ -18,21 +19,30 @@ import { ClienteService } from './../../../core/services/cliente.service';
 export class DashboardComponent implements OnInit {
 
     clienteService = inject(ClienteService);
+    lancamentoService = inject(LancamentoService);
 
     totais = {};
 
     data = {
-    labels: ['Club', 'Five', 'PlayON', 'Warez'],
-    datasets: [{
-        backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
-        data: [40, 20, 80, 10]
-    }]
+      labels: ['Club', 'Five', 'PlayON', 'Warez'],
+        datasets: [{
+          backgroundColor: ['#41B883', '#E46651', '#00D8FF', '#DD1B16'],
+          data: [40, 20, 80, 10]
+        }]
     };
+
+    gerarCorAleatoria() {
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+        return `rgba(${r}, ${g}, ${b}, 0.7)`;
+    }
 
     ngOnInit(): void {
         this.getTotalClientes();
         this.getTotalClientesApps();
         this.getTotalClientesStatus();
+        this.getTotalLancamentos();
     }
 
     getTotalClientes() {
@@ -99,6 +109,57 @@ export class DashboardComponent implements OnInit {
         })
     }
 
+    getTotalLancamentos() {
+		this.lancamentoService.getTotalLancamentos(1).subscribe({
+			next: response => {
+				const ctx = document.getElementById('chartTotalLancamentos') as HTMLCanvasElement;
+
+				// Transformar datasets do backend no formato Chart.js
+				const datasets = Object.keys(response.datasets).map(banco => ({
+					label: banco,
+					data: response.datasets[banco],
+					backgroundColor: this.gerarCorAleatoria(),
+					borderWidth: 1
+				}));
+
+				new Chart(ctx, {
+					type: 'bar',
+					data: {
+						labels: response.labels,
+						datasets: datasets
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							x: { stacked: true },
+							y: { stacked: true }
+						},
+						plugins: {
+							title: {
+								display: true,
+								text: 'Totais por Banco'
+							},
+              tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return context.dataset.label + ': R$ ' +
+                            Number(context.raw).toLocaleString('pt-BR', {
+                                minimumFractionDigits: 2
+                            });
+                    }
+                }
+            }
+						}
+					}
+				});
+   			}
+		});
+
+    }
+
+
+
     /* getTotalClientesApps() {
         this.clienteService.clientesTotalApps().subscribe({
             next: response => {
@@ -152,7 +213,7 @@ export class DashboardComponent implements OnInit {
                             title: {
                                 display: true,
                                 text: 'Clients Status Totais'
-                            }
+                            },
                         }
                     }
                 });
