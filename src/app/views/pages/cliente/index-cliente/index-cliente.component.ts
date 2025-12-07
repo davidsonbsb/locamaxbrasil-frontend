@@ -231,7 +231,6 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
         dialogRef.updatePosition({top: '120px'});
 
         dialogRef.afterClosed().subscribe(result => {
-          console.log('result: ', result);
             this.index();
         });
     }
