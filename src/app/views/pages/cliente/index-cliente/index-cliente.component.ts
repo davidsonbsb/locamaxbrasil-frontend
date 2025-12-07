@@ -231,6 +231,7 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
         dialogRef.updatePosition({top: '120px'});
 
         dialogRef.afterClosed().subscribe(result => {
+          console.log('result: ', result);
             this.index();
         });
     }
@@ -262,8 +263,8 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
 
           this.clienteService.renovar( id ).subscribe({
               next: response => {
-                const vencimento = this.dataPipe.transform(response.vencimento, 'dd/MM/yyyy')
-                this.swalService.swalRenovacao('Cliente '+response.nome+' foi renovado para '+ vencimento );
+                //const vencimento = this.dataPipe.transform(response.vencimento, 'dd/MM/yyyy')
+                this.swalService.swalRenovacao(response.msg.replace(/\n/g, '<br>'));
                 this.index();
               },
               error: err => {

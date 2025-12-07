@@ -57,7 +57,7 @@ export class SwalService {
         return Swal.fire({
             icon: 'success',
             title: 'Renovação',
-            text: text,
+            html: text,
 
             })
     }

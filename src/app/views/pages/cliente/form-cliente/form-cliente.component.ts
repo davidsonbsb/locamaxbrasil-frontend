@@ -223,7 +223,9 @@ export class FormClienteComponent {
         if(this.action === 'adicionar'){
             this.crudService.store(this.form.value,'cliente').subscribe({
                 next: response =>{
-                    this.swalService.swalToaster('success','','Cliente adicionado com sucesso!');
+                  console.log('response: ', response);
+                    this.swalService.swalRenovacao(response.msg.replace(/\n/g, '<br>'));
+                    //this.swalService.swalToaster('success','','Cliente adicionado com sucesso!');
                     this.dialogRef.close();
                 },
                 error: err => {
