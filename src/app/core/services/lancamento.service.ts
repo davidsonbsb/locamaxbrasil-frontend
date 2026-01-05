@@ -19,4 +19,8 @@ export class LancamentoService {
     return this.http.get(`${this.apiHost}/totalLancamentoBancoMes/${mes}`);
   }
 
+  getTotalLancamentosDia(mes: number): Observable<any> {
+    return this.http.get(`${this.apiHost}/totalLancamentoBancoDia/${mes}`);
+  }
+
 }

@@ -31,6 +31,20 @@ export class DashboardComponent implements OnInit {
         }]
     };
 
+    private coresPorBanco: { [banco: string]: string } = {
+      'Inter': '#ff9900',
+      'Mercado Pago': '#0678d6',
+      'Cripto': '#CC092F',
+      'Débora': '#ec009d',
+      'Pic Pay': '#23944e',
+      'Nubank': '#6a2677',
+      'Sophie': '#ce6dce',
+    };
+
+    getCorBanco(banco: string): string {
+      return this.coresPorBanco[banco] ?? '#999999'; // fallback
+    }
+
     gerarCorAleatoria() {
         const r = Math.floor(Math.random() * 255);
         const g = Math.floor(Math.random() * 255);
@@ -43,6 +57,7 @@ export class DashboardComponent implements OnInit {
         this.getTotalClientesApps();
         this.getTotalClientesStatus();
         this.getTotalLancamentos();
+        this.getTotalLancamentosDia();
     }
 
     getTotalClientes() {
@@ -109,56 +124,102 @@ export class DashboardComponent implements OnInit {
         })
     }
 
-    getTotalLancamentos() {
-		this.lancamentoService.getTotalLancamentos(1).subscribe({
-			next: response => {
-				const ctx = document.getElementById('chartTotalLancamentos') as HTMLCanvasElement;
+    getTotalLancamentosDia() {
+      this.lancamentoService.getTotalLancamentosDia(1).subscribe({
+        next: response => {
+          const ctx = document.getElementById('chartTotalLancamentosDia') as HTMLCanvasElement;
 
-				// Transformar datasets do backend no formato Chart.js
-				const datasets = Object.keys(response.datasets).map(banco => ({
-					label: banco,
-					data: response.datasets[banco],
-					backgroundColor: this.gerarCorAleatoria(),
-					borderWidth: 1
-				}));
+          // Transformar datasets do backend no formato Chart.js
+          const datasets = Object.keys(response.datasets).map(banco => ({
+            label: banco,
+            data: response.datasets[banco],
+            backgroundColor: this.getCorBanco(banco) + 'CC',
+            borderWidth: 1
+          }));
 
-				new Chart(ctx, {
-					type: 'bar',
-					data: {
-						labels: response.labels,
-						datasets: datasets
-					},
-					options: {
-						responsive: true,
-						maintainAspectRatio: false,
-						scales: {
-							x: { stacked: true },
-							y: { stacked: true }
-						},
-						plugins: {
-							title: {
-								display: true,
-								text: 'Totais por Banco'
-							},
-              tooltip: {
-                callbacks: {
-                    label: function(context) {
-                        return context.dataset.label + ': R$ ' +
-                            Number(context.raw).toLocaleString('pt-BR', {
-                                minimumFractionDigits: 2
-                            });
-                    }
-                }
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: response.labels,
+              datasets: datasets
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+              },
+              plugins: {
+                title: {
+                  display: true,
+                  text: 'Totais por dia'
+                },
+                tooltip: {
+                  callbacks: {
+                      label: function(context) {
+                          return context.dataset.label + ': R$ ' +
+                              Number(context.raw).toLocaleString('pt-BR', {
+                                  minimumFractionDigits: 2
+                              });
+                      }
+                  }
+              }
+              }
             }
-						}
-					}
-				});
-   			}
-		});
+          });
+          }
+      });
 
     }
 
+    getTotalLancamentos() {
+      this.lancamentoService.getTotalLancamentos(1).subscribe({
+        next: response => {
+          const ctx = document.getElementById('chartTotalLancamentos') as HTMLCanvasElement;
 
+          // Transformar datasets do backend no formato Chart.js
+          const datasets = Object.keys(response.datasets).map(banco => ({
+            label: banco,
+            data: response.datasets[banco],
+            backgroundColor: this.getCorBanco(banco) + 'CC',
+            borderWidth: 1
+          }));
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: response.labels,
+              datasets: datasets
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                x: { stacked: true },
+                y: { stacked: true }
+              },
+              plugins: {
+                title: {
+                  display: true,
+                  text: 'Totais por Banco'
+                },
+                tooltip: {
+                  callbacks: {
+                      label: function(context) {
+                          return context.dataset.label + ': R$ ' +
+                              Number(context.raw).toLocaleString('pt-BR', {
+                                  minimumFractionDigits: 2
+                              });
+                      }
+                  }
+              }
+              }
+            }
+          });
+          }
+      });
+    }
 
     /* getTotalClientesApps() {
         this.clienteService.clientesTotalApps().subscribe({
