@@ -67,6 +67,8 @@ export class FormClienteComponent {
           'DupleCast',
           'Duplex',
           'LazerPlay',
+          'FunPlay',
+          'IBO Player',
           'Hibrido',
           'Multiplayer V1',
           'Multiplayer V2',
@@ -75,7 +77,6 @@ export class FormClienteComponent {
           'STB',
           'Smarters',
           'SSiptv',
-          'TV Play',
           'Ultra Player',
           'Web',
           'XCIPTV',
@@ -84,6 +85,12 @@ export class FormClienteComponent {
 
     planos: Array<any> = [
         { "id" : 'pop' , "desc" : "Pop" },
+        { "id" : 'pop-2' , "desc" : "Pop 2 Acessos" },
+        { "id" : 'pop-3' , "desc" : "Pop 3 Acessos" },
+        { "id" : 'pop-4' , "desc" : "Pop 4 Acessos" },
+        { "id" : 'pop-5' , "desc" : "Pop 5 Acessos" },
+        { "id" : 'pop-6' , "desc" : "Pop 6 Acessos" },
+        { "id" : 'pop-promo' , "desc" : "Pop Promocional" },
         { "id" : 'mega', "desc" : "Mega" },
         { "id" : 'premium', "desc" : "Premium" }
     ];
