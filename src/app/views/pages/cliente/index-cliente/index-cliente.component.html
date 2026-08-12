@@ -58,7 +58,7 @@
 
             <span (click)="$event.stopPropagation();">
               @if (column.header == 'Renovar') {
-                  <mat-icon class="icon-action text-success" (click)="renovarCliente(row.id)">cached</mat-icon>
+                  <mat-icon class="icon-action text-success" [class.spin]="isRenovando(row.id)" [class.disabled]="isRenovando(row.id)" (click)="renovarCliente(row.id)">cached</mat-icon>
               }
             </span>
 

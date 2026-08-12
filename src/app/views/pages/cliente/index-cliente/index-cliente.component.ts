@@ -49,6 +49,7 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
     dataSource = new MatTableDataSource<any>([]);
     servidores: any = [];
     clienteAtivos: boolean = true;
+    renovandoIds: Set<number> = new Set();
 
     columns = [
         {
@@ -260,13 +261,21 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
 
       if (item) {
 
+          if (this.renovandoIds.has(id)) {
+            return;
+          }
+
+          this.renovandoIds.add(id);
+
           this.clienteService.renovar( id ).subscribe({
               next: response => {
                 //const vencimento = this.dataPipe.transform(response.vencimento, 'dd/MM/yyyy')
+                this.renovandoIds.delete(id);
                 this.swalService.swalRenovacao(response.msg.replace(/\n/g, '<br>'));
                 this.index();
               },
               error: err => {
+              this.renovandoIds.delete(id);
               console.error('Error updating status', err);
               this.swalService.swalToaster('error','','Erro ao renovar cliente: '+err);
               }
@@ -274,6 +283,10 @@ export class IndexClienteComponent implements OnInit, AfterViewInit{
       } else {
           console.error('Item não encontrado!');
       }
+    }
+
+    isRenovando(id: number): boolean {
+      return this.renovandoIds.has(id);
     }
 
     enviarNotificacao(id: number){

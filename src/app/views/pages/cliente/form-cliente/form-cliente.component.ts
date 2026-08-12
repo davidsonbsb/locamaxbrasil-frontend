@@ -76,6 +76,7 @@ export class FormClienteComponent {
           'Multiplayer V2',
           'P2P',
           'Prime',
+          'Power Player',
           'Quick',
           'STB',
           'Smarters',
