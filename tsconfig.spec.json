@@ -2,20 +2,13 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/app",
+    "outDir": "./out-tsc/spec",
     "types": [
-      "@angular/localize"
-    ],
-    "paths": {
-      "@docs-components/*": [
-        "./src/components/*"
-      ]
-    }
+      "jasmine"
+    ]
   },
-  "files": [
-    "src/main.ts"
-  ],
   "include": [
+    "src/**/*.spec.ts",
     "src/**/*.d.ts"
   ],
   "angularCompilerOptions": {

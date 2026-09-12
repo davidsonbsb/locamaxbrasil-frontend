@@ -1,5 +1,5 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, EventEmitter, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonToggleChange, MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -24,6 +24,7 @@ import { FormLancamentoComponent } from './../../lancamento/form-lancamento/form
     styleUrl: './index-lancamento.component.scss',
     providers: [DatePipe],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         CardModule,
         MatIconModule,

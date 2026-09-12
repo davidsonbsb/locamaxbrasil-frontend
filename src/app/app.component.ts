@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { environment } from './../environments/environment.prod';
@@ -12,6 +12,7 @@ import { iconSubset } from './icons/icon-subset';
   selector: 'app-root',
   template: '<router-outlet />',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterOutlet]
 })
 export class AppComponent implements OnInit {

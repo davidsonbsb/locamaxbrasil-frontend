@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -17,6 +17,7 @@ import { SwalService } from '../../../core/services/swal.service';
   standalone: true,
   templateUrl: './wpp-send-lote.component.html',
   styleUrl: './wpp-send-lote.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CardModule,
         MatIcon,

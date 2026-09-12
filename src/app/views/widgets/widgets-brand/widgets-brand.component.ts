@@ -17,7 +17,7 @@ type BrandData = {
   selector: 'app-widgets-brand',
   templateUrl: './widgets-brand.component.html',
   styleUrls: ['./widgets-brand.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
   imports: [RowComponent, ColComponent, WidgetStatDComponent, IconDirective, ChartjsComponent]
 })

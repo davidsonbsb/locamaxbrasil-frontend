@@ -1,6 +1,6 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -24,6 +24,7 @@ import { DecimalPipeFormat } from '../../../../pipes/decimal.pipe';
     styleUrl: './form-lancamento.component.scss',
     providers: [DatePipe],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         CardModule,
         MatIcon,

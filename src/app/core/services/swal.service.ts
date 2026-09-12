@@ -38,7 +38,7 @@ export class SwalService {
     }
 
     swalToaster (
-        icon: string = 'success' || 'error' || 'warning',
+        icon: string = 'success',
         title: string,
         text : string,
     ){

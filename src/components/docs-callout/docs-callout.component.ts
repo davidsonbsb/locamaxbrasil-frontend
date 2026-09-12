@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import packageJson from '../../../package.json';
 import { NgTemplateOutlet } from '@angular/common';
 import { CalloutComponent } from '@coreui/angular';
@@ -8,6 +8,7 @@ import { CalloutComponent } from '@coreui/angular';
   templateUrl: './docs-callout.component.html',
   styleUrls: ['./docs-callout.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CalloutComponent, NgTemplateOutlet]
 })
 export class DocsCalloutComponent {

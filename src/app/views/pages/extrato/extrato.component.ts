@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -12,6 +12,7 @@ import { CardModule, FormModule } from '@coreui/angular';
   standalone: true,
   templateUrl: './extrato.component.html',
   styleUrl: './extrato.component.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CardModule,
     FormModule,

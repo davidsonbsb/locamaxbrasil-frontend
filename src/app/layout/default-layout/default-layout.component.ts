@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgScrollbar } from 'ngx-scrollbar';
 
@@ -30,6 +30,7 @@ function isOverflown(element: HTMLElement) {
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     SidebarComponent,
     SidebarHeaderComponent,

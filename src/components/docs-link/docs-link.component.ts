@@ -1,9 +1,10 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-docs-link',
     templateUrl: './docs-link.component.html',
     styleUrls: ['./docs-link.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true
 })
 export class DocsLinkComponent implements OnInit {

@@ -1,6 +1,6 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DatePipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
@@ -23,6 +23,7 @@ import { LancamentoComponent } from '../../lancamento/lancamento/lancamento.comp
     styleUrl: './form-cliente.component.scss',
     providers: [DatePipe],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         CardModule,
         MatIcon,

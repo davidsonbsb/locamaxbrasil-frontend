@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { CardModule } from '@coreui/angular';
 import { ChartjsModule } from '@coreui/angular-chartjs';
@@ -10,6 +10,7 @@ import { LancamentoService } from './../../../core/services/lancamento.service';
     templateUrl: 'dashboard.component.html',
     styleUrls: ['dashboard.component.scss'],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         ChartjsModule,
         CardModule,

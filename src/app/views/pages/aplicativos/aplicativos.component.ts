@@ -1,5 +1,5 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
@@ -19,6 +19,7 @@ import { CrudService } from './../../../core/services/crud.service';
   styleUrl: './aplicativos.component.scss',
   providers: [DatePipe],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CardModule,
     MatFormFieldModule,

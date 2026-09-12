@@ -7,7 +7,7 @@ import { RowComponent, ColComponent, WidgetStatEComponent, TextColorDirective } 
     selector: 'app-widgets-e',
     templateUrl: './widgets-e.component.html',
     styleUrls: ['./widgets-e.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [RowComponent, ColComponent, TextColorDirective, WidgetStatEComponent, ChartjsComponent]
 })

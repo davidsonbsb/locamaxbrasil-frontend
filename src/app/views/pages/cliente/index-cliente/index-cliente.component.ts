@@ -1,5 +1,5 @@
 import { DatePipe, NgClass } from '@angular/common';
-import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -22,6 +22,7 @@ import { ClienteService } from './../../../../core/services/cliente.service';
     styleUrl: './index-cliente.component.scss',
     providers: [DatePipe],
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         CardModule,
         MatIconModule,

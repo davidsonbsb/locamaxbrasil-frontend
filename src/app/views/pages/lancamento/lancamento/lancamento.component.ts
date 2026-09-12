@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, Input, ViewChild } from '@angular/core';
+import { Component, inject, Input, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -26,6 +26,7 @@ type Lancamento = {
     styleUrl: './lancamento.component.scss',
     standalone: true,
     providers: [DatePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         MatButtonModule,
         MatTableModule,

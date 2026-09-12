@@ -17,7 +17,7 @@ import { RowComponent, ColComponent, WidgetStatAComponent, TemplateIdDirective, 
     selector: 'app-widgets-dropdown',
     templateUrl: './widgets-dropdown.component.html',
     styleUrls: ['./widgets-dropdown.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Default,
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [RowComponent, ColComponent, WidgetStatAComponent, TemplateIdDirective, IconDirective, ThemeDirective, DropdownComponent, ButtonDirective, DropdownToggleDirective, DropdownMenuDirective, DropdownItemDirective, RouterLink, DropdownDividerDirective, ChartjsComponent]
 })
@@ -183,6 +183,7 @@ export class WidgetsDropdownComponent implements OnInit, AfterContentInit {
     selector: 'app-chart-sample',
     template: '<c-chart type="line" [data]="data" [options]="options" width="300" #chart></c-chart>',
     standalone: true,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [ChartjsComponent]
 })
 export class ChartSample implements AfterViewInit {
