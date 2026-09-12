@@ -46,3 +46,6 @@ Thumbs.db
 
 .info.json
 info.ison
+
+# Environment
+.env
