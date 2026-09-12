@@ -1,0 +1,247 @@
+
+<form cForm [formGroup]="form">
+    <div class="row mx-2 my-2">
+        <c-card [cBorder]="{top: {color: 'dark' , width: 3}}" class="shadow">
+            <c-card-body>
+                <div class="row">
+                    <div class="col-6 d-flex">
+                        <mat-icon class="me-2">person</mat-icon>
+                        <p class="mt-1">Dados Gerais</p>
+                    </div>
+                    <div class="col-6 d-flex justify-content-end cpointer">
+                        <mat-icon (click)="closeDialog()">close</mat-icon>
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                      <c-card [color]="'light'">
+                        <c-card-body class="bg-gradient">
+                          <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+                            <mat-label class="color-field">Cliente</mat-label>
+                            <input
+                                matInput
+                                formControlName="nome"
+                                type="text"
+                                style="color: #000;"
+                                >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+                            <mat-label class="color-field">Telefone</mat-label>
+                            <input
+                                matInput
+                                formControlName="telefone"
+                                type="text"
+                                style="color: #000;"
+                                >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+                            <mat-label class="color-field">Valor</mat-label>
+                            <input
+                                matInput
+                                formControlName="valor"
+                                type="text"
+                                style="color: #000;"
+                                >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="dense-1 field-100" >
+                            <mat-label>Plano</mat-label>
+                            <mat-select formControlName="plano" style="color: #000;">
+                                <mat-option>Nenhum</mat-option>
+                                @for (plano of planos; track plano) {
+                                <mat-option [value]="plano.id">{{plano.desc}}</mat-option>
+                                }
+                            </mat-select>
+                        </mat-form-field>
+
+                        @if (adicionar) {
+                            <mat-form-field appearance="outline" class="dense-1 field-100" >
+                                <mat-label>Banco</mat-label>
+                                <mat-select formControlName="banco_id" style="color: #000;">
+                                    <mat-option>Nenhum</mat-option>
+                                    @for (banco of bancos; track banco) {
+                                    <mat-option [value]="banco.id">{{banco.nome}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                        }
+
+                        <mat-form-field appearance="outline" class="dense-1 field-100">
+                            <mat-label class="color-field">Vencimento</mat-label>
+                            <input
+                                matInput
+                                formControlName="vencimento"
+                                [matDatepicker]="picker"
+                                style="color: #000;"
+                                >
+                            <!-- <mat-hint>DD/MM/AAAA</mat-hint> -->
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+
+                        <mat-checkbox formControlName="notificacao_wpp" color="primary">Enviar Notifificação</mat-checkbox>
+                          </c-card-body>
+                          </c-card>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <c-card [color]="'light'">
+                        <c-card-body class="bg-gradient">
+
+                            <mat-form-field appearance="outline" class="dense-1 field-100" >
+                                <mat-label>Servidor</mat-label>
+                                <mat-select formControlName="servidor_id" style="color: #000;">
+                                    <mat-option>Nenhum</mat-option>
+                                    @for (servidor of servidores; track servidor) {
+                                        <mat-option [value]="servidor.id">{{servidor.nome}}</mat-option>
+                                    }
+                                </mat-select>
+                                <img matSuffix [src]="getServidorLogo()" class="icon-server">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" class="dense-1 field-100" >
+                              <mat-label>Url</mat-label>
+                              <input
+                              matInput
+                              formControlName="url"
+                              type="text"
+                              style="color: #000;"
+                              >
+                          </mat-form-field>
+
+                          <mat-form-field appearance="outline"  disabled class="dense-1 field-100 rm-space-bottom">
+                            <mat-label class="color-field">Usuário</mat-label>
+                            <input
+                                matInput
+                                formControlName="usuario"
+                                type="text"
+                                style="color: #000;"
+                                >
+                          </mat-form-field>
+                        </c-card-body>
+                      </c-card>
+
+                      <c-card [color]="'light'" class="mt-2 d-flex">
+                        <c-card-body class="bg-gradient">
+                          <mat-form-field appearance="outline" class="dense-1 field-100 rm-space-bottom">
+                              <mat-label>Observação</mat-label>
+                              <textarea
+                                  matInput [rows]="5"
+                                  formControlName="observacao"
+                                  style="color: #000;"
+                                  ></textarea>
+                          </mat-form-field>
+                        </c-card-body>
+                      </c-card>
+                    </div>
+
+                    <div class="col-md-4">
+
+                            <c-card [color]="'light'">
+                            <c-card-body class="bg-gradient">
+
+                                <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+                                    <mat-label class="color-field">Dispositivo</mat-label>
+                                    <input
+                                        matInput
+                                        formControlName="dispositivo"
+                                        type="text"
+                                        style="color: #000;"
+                                        >
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="dense-1 field-100" >
+                                    <mat-label>Aplicativo</mat-label>
+                                    <mat-select formControlName="app" style="color: #000;">
+                                        <mat-option>Nenhum</mat-option>
+                                        @for (app of apps; track app) {
+                                        <mat-option [value]="app">{{app}}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+                                    <mat-label class="color-field">ID Aplicativo</mat-label>
+                                    <input
+                                        matInput
+                                        formControlName="app_id"
+                                        type="text"
+                                        style="color: #000;"
+                                        >
+                                        @if (!adicionar){
+                                          <mat-icon class="button-copy" matIconSuffix [cdkCopyToClipboard]="cliente.app_id" (cdkCopyToClipboardCopied)="onCopy($event)">content_copy</mat-icon>
+                                        }
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline"  disabled class="dense-1 field-100 d-flex">
+                                    <mat-label class="color-field">Chave Aplicativo</mat-label>
+                                    <input
+                                        matInput
+                                        formControlName="app_key"
+                                        type="text"
+                                        style="color: #000;"
+                                        >
+                                        @if (!adicionar){
+                                          <mat-icon class="button-copy" matIconSuffix [cdkCopyToClipboard]="cliente.app_key" (cdkCopyToClipboardCopied)="onCopy($event)">content_copy</mat-icon>
+                                        }
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" class="dense-1 field-100 rm-space-bottom">
+                                    <mat-label class="color-field">Vencimento Aplicativo</mat-label>
+                                    <input
+                                        matInput
+                                        formControlName="app_vencimento"
+                                        [matDatepicker]="picker2"
+                                        style="color: #000;"
+                                        >
+                                    <!-- <mat-hint>DD/MM/AAAA</mat-hint> -->
+                                    <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+
+                            </c-card-body>
+                        </c-card>
+                    </div>
+                </div>
+            </c-card-body>
+            <c-card-footer>
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                        @if (!adicionar){
+                            <button
+                                class="btn btn-sm btn-danger my-3 flex-row-reverse"
+                                (click)="excluir(cliente.id)"
+                                [disabled]="isEditar"
+                                >Excluir
+                            </button>
+                        }
+                    </div>
+
+                    <button
+                        class="btn btn-sm btn-info mx-1 my-3 flex-row-reverse"
+                        (click)="modalLancamentos(cliente.id)"
+                        >Lançamentos
+                    </button>
+                    @if (!adicionar){
+                        <button
+                            class="btn btn-sm btn-primary mx-1 my-3"
+                            (click)="editar()"
+                            [disabled]="isEditar"
+                            >Editar
+                        </button>
+                    }
+                    <button
+                        class="btn btn-sm btn-success mx-1 my-3"
+                        [disabled]="form.invalid"
+                        (click)="salvar()"
+                        >Salvar
+                    </button>
+                </div>
+            </c-card-footer>
+        </c-card>
+    </div>
+</form>

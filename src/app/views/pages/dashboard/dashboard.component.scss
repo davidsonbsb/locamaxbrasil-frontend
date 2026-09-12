@@ -1,0 +1,29 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.col-sm-4 {
+  flex: 1 1 calc(33% - 20px);
+}
+
+@media (max-width: 768px) {
+  .col-sm-4 {
+    flex: 1 1 100%;
+  }
+}
+
+.chart-card {
+    height: 350px;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(4px);
+}
+
+.chart-card canvas {
+  flex: 2;
+}

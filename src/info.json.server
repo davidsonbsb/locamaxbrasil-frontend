@@ -1,0 +1,8 @@
+{
+  "serverInfo": {
+      "api": "api",
+      "host": "http://app.coalaturbo.space:81",
+      "build": "release/v0.1.0",
+      "release": "release/v0.1.0"
+  }
+}

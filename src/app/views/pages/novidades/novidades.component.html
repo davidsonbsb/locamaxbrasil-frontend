@@ -1,0 +1,14 @@
+<div class="timeline">
+  @for (item of eventos; track item; let i = $index) {
+    <div class="timeline-container" [ngClass]="{'left': i % 2 === 0, 'right': i % 2 !== 0}">
+      <div class="content">
+        <img [src]="item.logo" alt="Capa" class="poster" />
+        <div class="info">
+          <h3>{{ item.nome }}</h3>
+          <p>{{ item.grupo }}</p>
+          <!-- <span class="data">{{ item.data }}</span> -->
+        </div>
+      </div>
+    </div>
+  }
+</div>

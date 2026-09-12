@@ -1,0 +1,8 @@
+{
+  "serverInfo": {
+      "api": "api",
+      "host": "http://127.0.0.1:8000",
+      "build": "release/v0.1.0",
+      "release": "release/v0.1.0"
+  }
+}
